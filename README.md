@@ -1,4 +1,4 @@
-#2025 Noita Mod Jam.
+# 2025 Noita Mod Jam.
 
 Theme Space and Corruption
 
