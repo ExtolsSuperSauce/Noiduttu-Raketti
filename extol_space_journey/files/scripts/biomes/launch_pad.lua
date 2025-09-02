@@ -6,5 +6,5 @@ dofile_once("data/scripts/biome_scripts.lua")
 RegisterSpawnFunction( 0xffffeedd, "init" )
 
 function init( x, y, w, h )
-	LoadPixelScene( "mods/extol_space_journey/files/pixel_scenes/battlefield_right.png", "", x, y, "", true )
+	LoadPixelScene( "mods/extol_space_journey/files/pixel_scenes/launch_pad_mats.png", "mods/extol_space_journey/files/pixel_scenes/launch_pad_visual.png", x, y, "", true )
 end
