@@ -1,4 +1,10 @@
 <Entity>
+	<SpriteComponent
+		image_file="mods/extol_space_journey/files/entities/moon/moon.png"
+		offset_x="82"
+		offset_y="82"
+		z_index="1"
+	></SpriteComponent>
 	<CollisionTriggerComponent
 		radius="82"
 	></CollisionTriggerComponent>
