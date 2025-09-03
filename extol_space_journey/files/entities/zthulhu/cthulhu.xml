@@ -1,0 +1,18 @@
+<Entity>
+	<SpriteComponent
+		image_file="mods/extol_space_journey/files/entities/zthulhu/cthulhu.png"
+		offset_x="82"
+		offset_y="82"
+		z_index="1"
+	></SpriteComponent>
+	<CollisionTriggerComponent
+		radius="82"
+		destroy_this_entity_when_triggered="0"
+		width="165"
+		height="165"
+	></CollisionTriggerComponent>
+	<LuaComponent
+		script_collision_trigger_hit="mods/extol_space_journey/files/entities/zthulhu/cthulhu.lua"
+		execute_every_n_frame="-1"
+	></LuaComponent>
+</Entity>
