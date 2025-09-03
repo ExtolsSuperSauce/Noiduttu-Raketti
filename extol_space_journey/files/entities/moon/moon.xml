@@ -7,6 +7,9 @@
 	></SpriteComponent>
 	<CollisionTriggerComponent
 		radius="82"
+		destroy_this_entity_when_triggered="0"
+		width="165"
+		height="165"
 	></CollisionTriggerComponent>
 	<LuaComponent
 		script_collision_trigger_hit="mods/extol_space_journey/files/entities/moon/moon_collision.lua"
