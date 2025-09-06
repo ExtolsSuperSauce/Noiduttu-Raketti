@@ -5,14 +5,10 @@ Made by Extol and absent_friend
 
 TODO:
 
-Boost/Fuel Pickups (files/entities/pickup) and (files/scripts/biomes/rocket_ship.lua)
+GUI/Upgrades/Random Events (`gui.lua`)
 
-GUI/Upgrades
+Planet Sprites/Pixel Scenes (`_pixel_scenes.xml`)
 
-Planet Sprites/Pixel Scenes(?)
-
-Height to Money script/return to start
-
-Easter Eggs
+Height to Money script/return to start (`gui.lua`)
 
 Workshop Preview Image
