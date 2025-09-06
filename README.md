@@ -1,7 +1,7 @@
 # 2025 Noita Mod Jam.
 
 ## Theme Space and Corruption.
-Made by Extol and absent_friend
+Made by Extol and Absent Friend
 
 TODO:
 

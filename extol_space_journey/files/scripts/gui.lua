@@ -57,6 +57,7 @@ for _, comp in ipairs(storage_comps) do
 	end
 end
 
+
 -- Money increment + "back to start"
 local fuel = ComponentGetValue2(fuel_component, "value_float")
 local fuel_tank = ComponentGetValue2(fuel_component, "value_int")
@@ -268,12 +269,13 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	return
 end
 
--- Flight Controls
 
+-- Flight Controls
 local controls = EntityGetFirstComponent(player, "ControlsComponent")
 local left = ComponentGetValue2(controls, "mButtonDownLeft")
 local right = ComponentGetValue2(controls, "mButtonDownRight")
 local rot_level = ComponentGetValue2(upgrade_component, "value_string")
+local rocket_flame_comp = EntityGetFirstComponent(player, "ParticleEmitterComponent", "rocket_flame")
 rot_level = tonumber(rot_level)
 if left then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
@@ -287,12 +289,16 @@ end
 end]]
 
 local flying = ComponentGetValue2(controls, "mButtonDownFly")
-local x,y,rotation = EntityGetTransform(player)
+local x, y, rotation = EntityGetTransform(player)
 local fly_level = ComponentGetValue2(upgrade_component,"value_int")
 if flying and fuel > 0 then
 	local fly_force_x, fly_force_y = vec_rotate(0, fly_list[fly_level].amount, rotation)
 	PhysicsApplyForce(player, fly_force_x, fly_force_y)
 	ComponentSetValue2(fuel_component, "value_float", fuel - 0.075)
+	-- surely theres a better way to make this happen without having to call ComponentSetValue2 every frame?
+	ComponentSetValue2(rocket_flame_comp, "custom_alpha", -1)
+else
+	ComponentSetValue2(rocket_flame_comp, "custom_alpha", 0)
 end
 
 -- Prevent player from opening the inventory
@@ -300,6 +306,7 @@ local igc = EntityGetFirstComponent(player, "InventoryGuiComponent")
 if igc and ComponentGetValue2(igc, "mActive") then
 	ComponentSetValue2(igc, "mActive", false)
 end
+
 
 -- Fuel Indicator
 local scale = fuel/fuel_tank
@@ -335,7 +342,6 @@ end
 
 
 -- Planet Radar
-
 local planet_list = {
 	{ name = "moon",  pos_x = 0,   pos_y = -10000 },
 	{ name = "mars",  pos_x = 4200, pos_y = -15000 },
