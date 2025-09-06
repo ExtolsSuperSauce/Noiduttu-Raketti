@@ -114,9 +114,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	fuel_level = tonumber(fuel_level)
 	if fuel_list[fuel_level].cost <= cash and fuel_list[fuel_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
+		GuiText(gui, res_x * 0.55, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		local upgrade_fuel = GuiImageButton(gui, 9, res_x * 0.47, res_y * 0.3, "", "mods/extol_space_journey/files/gui/fuel_upgrade.png")
 		if upgrade_fuel then
@@ -127,9 +127,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		end
 	else
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.6, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
+		GuiText(gui, res_x * 0.55, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiImage(gui, 9, res_x * 0.47, res_y * 0.3, "mods/extol_space_journey/files/gui/fuel_upgrade.png", 0.3, 1)
 	end
@@ -138,9 +138,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	local flight_level = ComponentGetValue2(upgrade_component,"value_int")
 	if fly_list[flight_level].cost <= cash and fly_list[flight_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.6, res_y * 0.42,"Upgrade Cost: $"..fly_list[flight_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.42,"Upgrade Cost: $"..fly_list[flight_level].cost)
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.6 ,res_y * 0.44,"Speed Level: " .. flight_level + 1)
+		GuiText(gui, res_x * 0.55 ,res_y * 0.44,"Speed Level: " .. flight_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		local upgrade_flight = GuiImageButton (gui, 10, res_x * 0.47, res_y * 0.4, "", "mods/extol_space_journey/files/gui/speed_upgrade.png")
 		if upgrade_flight then
@@ -149,9 +149,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		end
 	else
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.42, "Upgrade Cost: $" .. fly_list[flight_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.42, "Upgrade Cost: $" .. fly_list[flight_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.44, "Speed Level: " .. flight_level + 1)
+		GuiText(gui, res_x * 0.55, res_y * 0.44, "Speed Level: " .. flight_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiImage(gui, 10, res_x * 0.47, res_y * 0.4, "mods/extol_space_journey/files/gui/speed_upgrade.png", 0.3, 1)
 	end
@@ -161,9 +161,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	rot_level = tonumber(rot_level)
 	if rot_list[rot_level].cost <= cash and rot_list[rot_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.54, "Speed Level: " .. rot_level + 1)
+		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		local upgrade_flight = GuiImageButton(gui, 10, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
 		if upgrade_flight then
@@ -172,9 +172,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		end
 	else
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
+		GuiText(gui, res_x * 0.55, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.6, res_y * 0.54, "Speed Level: " .. rot_level + 1)
+		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiImage(gui, 10, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
