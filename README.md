@@ -1,11 +1,11 @@
 # 2025 Noita Mod Jam.
 
 ## Theme Space and Corruption.
-Made by Extol, Evaisa, and absent_friend
+Made by Extol and absent_friend
 
 TODO:
 
-Player rocket
+Boost/Fuel Pickups (files/entities/pickup) and (files/scripts/biomes/rocket_ship.lua)
 
 GUI/Upgrades
 

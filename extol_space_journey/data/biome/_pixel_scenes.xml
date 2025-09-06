@@ -5,6 +5,16 @@
 
 	<mBufferedPixelScenes>
 		<PixelScene pos_x="0" pos_y="-10000" just_load_an_entity="mods/extol_space_journey/files/entities/moon/moon.xml" />
+		<PixelScene pos_x="3000" pos_y="-9900" just_load_an_entity="mods/extol_space_journey/files/entities/glitch_moon/glitch_moon.xml" />
+		<PixelScene pos_x="-4200" pos_y="-16000" just_load_an_entity="mods/extol_space_journey/files/entities/glitch_mars/glitch_mars.xml" />
+		<PixelScene pos_x="4200" pos_y="-15000" just_load_an_entity="mods/extol_space_journey/files/entities/mars/mars.xml" />
+		<PixelScene pos_x="-2000" pos_y="-20000" just_load_an_entity="mods/extol_space_journey/files/entities/jupiter/jupiter.xml" />
+		<PixelScene pos_x="-6000" pos_y="-14000" just_load_an_entity="mods/extol_space_journey/files/entities/venus/venus.xml" />
+		<PixelScene pos_x="0" pos_y="-20000" just_load_an_entity="mods/extol_space_journey/files/entities/glitch_venus/glitch_venus.xml" />
+		<PixelScene pos_x="1000" pos_y="-30000" just_load_an_entity="mods/extol_space_journey/files/entities/milliways/milliways.xml" />
+		<PixelScene pos_x="-3500" pos_y="-35000" just_load_an_entity="mods/extol_space_journey/files/entities/zthulhu/cthulhu.xml" />
+		<PixelScene pos_x="7777" pos_y="-25000" just_load_an_entity="mods/extol_space_journey/files/entities/petri/petri.xml" />
+		<PixelScene pos_x="6666" pos_y="-25000" just_load_an_entity="mods/extol_space_journey/files/entities/extol/extol.xml" />
 	</mBufferedPixelScenes>
 </PixelScenes>
 

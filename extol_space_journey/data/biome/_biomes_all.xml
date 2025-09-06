@@ -11,6 +11,12 @@
 		height_index="0"
 		color="ff726d0b" >
 	</Biome>
+	
+	<Biome 
+		biome_filename="mods/extol_space_journey/files/biomes/the_eye.xml" 
+		height_index="0"
+		color="ff40784f" >
+	</Biome>
 
 	<Biome 
 		biome_filename="data/biome/hills.xml" 
