@@ -1,17 +1,17 @@
-<Entity 
+<Entity
   name="DEBUG_NAME:player"
   tags="mortal,human,hittable,peasant,prey,player_unit,teleportable" >
-  
+
   <LuaComponent
 	script_source_file="mods/extol_space_journey/files/scripts/gui.lua"
   ></LuaComponent>
-  
+
   <AudioLoopComponent
 	file="mods/extol_space_journey/files/audio/extol_space.bank"
 	event_name="music/division"
 	auto_play="1"
   ></AudioLoopComponent>
-  
+
   <AudioLoopComponent
 	_tags="alarm"
 	_enabled="0"
@@ -19,32 +19,32 @@
 	event_name="sounds/alarm"
 	play_on_component_enable="1"
   ></AudioLoopComponent>
-  
+
   <AudioComponent
 	file="mods/extol_space_journey/files/audio/extol_space.bank"
 	event_root="sounds/corruption"
   ></AudioComponent>
-  
+
   <VariableStorageComponent
 	name="upgrade"
 	value_int="1"
 	value_string="1"
   ></VariableStorageComponent>
-  
+
   <VariableStorageComponent
 	name="fuel"
 	value_int="50"
 	value_float="50"
 	value_string="1"
   ></VariableStorageComponent>
-  
+
   <VariableStorageComponent
 	name="info"
 	value_int=""
 	value_float="50"
 	value_string=""
   ></VariableStorageComponent>
-  
+
   <PhysicsBody2Component
   	allow_sleep="1"
   	angular_damping="1"
@@ -55,15 +55,15 @@
 	>
   </PhysicsBody2Component>
 
-  <PhysicsImageShapeComponent 
+  <PhysicsImageShapeComponent
   	is_root="1"
-    centered="1" 
+    centered="1"
     image_file="mods/extol_space_journey/files/rocket/rocket.png"
     material="steel" >
   </PhysicsImageShapeComponent>
 
-  <ControlsComponent 
-    enabled="1" 
+  <ControlsComponent
+    enabled="1"
     gamepad_fire_on_thumbstick_extend="0"
     gamepad_fire_on_thumbstick_extend_threshold="0.9"
     gamepad_indirect_aiming_enabled="0"
@@ -80,13 +80,13 @@
   <SpriteAnimatorComponent>
   </SpriteAnimatorComponent>
 
-  <SpriteComponent 
-    _tags="aiming_reticle" 
-    alpha="1" 
+  <SpriteComponent
+    _tags="aiming_reticle"
+    alpha="1"
     image_file="data/ui_gfx/mouse_cursor.png"
-    ui_is_parent="0" 
-    offset_x="6" 
-    offset_y="35" 
+    ui_is_parent="0"
+    offset_x="6"
+    offset_y="35"
     has_special_scale="1"
     special_scale_x="1"
     special_scale_y="1"
@@ -118,8 +118,8 @@
   <AudioListenerComponent
     z="-60"
   ></AudioListenerComponent>
-  
-  <LightComponent 
+
+  <LightComponent
     r="255"
     g="255"
     b="255"
@@ -132,7 +132,7 @@
 	terminal_velocity="50"
   ></VelocityComponent>
 
-  <!-- --> 
+  <!-- -->
 
   <WalletComponent>
   </WalletComponent>
@@ -140,7 +140,7 @@
   <StreamingKeepAliveComponent>
   </StreamingKeepAliveComponent>
 
-  <ParticleEmitterComponent 
+  <ParticleEmitterComponent
     _tags="fast_movement_particles"
     emitted_material_name="spark_white"
     offset.x="0"
@@ -175,7 +175,7 @@
     >
   </ParticleEmitterComponent>
 
-  <ParticleEmitterComponent 
+  <ParticleEmitterComponent
     _tags="fast_movement_particles"
     emitted_material_name="spark_white"
     offset.x="-2"
@@ -210,7 +210,7 @@
     >
   </ParticleEmitterComponent>
 
-  <ParticleEmitterComponent 
+  <ParticleEmitterComponent
     _tags="fast_movement_particles"
     emitted_material_name="spark_white"
     offset.x="0"
@@ -245,4 +245,38 @@
     >
   </ParticleEmitterComponent>
 
+  <ParticleEmitterComponent
+    _tags="rocket_flame"
+    emitted_material_name="spark"
+    custom_alpha="0"
+    offset.x="0"
+    offset.y="14.5"
+    x_pos_offset_min="-3"
+    x_pos_offset_max="3"
+    y_pos_offset_min="0"
+    y_pos_offset_max="0"
+    x_vel_min="-12"
+    x_vel_max="12"
+    y_vel_min="-12"
+    y_vel_max="0"
+    gravity.y="60"
+    count_min="10"
+    count_max="30"
+    lifetime_min="0.4"
+    lifetime_max="1.4"
+    is_trail="1"
+    render_on_grid="1"
+    render_back="1"
+    fade_based_on_lifetime="1"
+    airflow_force="0.1"
+    airflow_scale="0.3"
+    emission_interval_min_frames="0"
+    emission_interval_max_frames="0"
+    emit_cosmetic_particles="1"
+    create_real_particles="0"
+    cosmetic_force_create="0"
+    ignore_transform_updated_msg="1"
+    is_emitting="1"
+    >
+  </ParticleEmitterComponent>
 </Entity>
