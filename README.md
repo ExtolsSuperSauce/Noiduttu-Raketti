@@ -5,8 +5,6 @@ Made by Extol and absent_friend
 
 TODO:
 
-Boost/Fuel Pickups (`files/entities/pickup`) and (`files/scripts/biomes/rocket_ship.lua`)
-
 GUI/Upgrades/Random Events (`gui.lua`)
 
 Planet Sprites/Pixel Scenes (`_pixel_scenes.xml`)

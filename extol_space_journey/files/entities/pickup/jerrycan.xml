@@ -1,0 +1,22 @@
+<Entity>
+	<SpriteComponent
+		image_file="mods/extol_space_journey/files/entities/pickup/jerrycan.png"
+		offset_x="5"
+		offset_y="5"
+		z_index="1"
+	></SpriteComponent>
+	<CollisionTriggerComponent
+		radius="15"
+		destroy_this_entity_when_triggered="0"
+		width="18"
+		height="18"
+	></CollisionTriggerComponent>
+	<LuaComponent
+		script_source_file="mods/extol_space_journey/files/entities/pickup/pickup_refresh.lua"
+		script_collision_trigger_hit="mods/extol_space_journey/files/entities/pickup/jerrycan.lua"
+		execute_every_n_frame="60"
+	></LuaComponent>
+	<VariableStorageComponent
+		value_bool="1"
+	></VariableStorageComponent>
+</Entity>

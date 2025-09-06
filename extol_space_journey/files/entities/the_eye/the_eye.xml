@@ -1,8 +1,8 @@
 <Entity>
 	<SpriteComponent
 		image_file="mods/extol_space_journey/files/entities/the_eye/the_eye.png"
-		offset_x="100"
-		offset_y="100"
+		offset_x="82"
+		offset_y="82"
 		z_index="1"
 	></SpriteComponent>
 	<CollisionTriggerComponent

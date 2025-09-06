@@ -1,0 +1,20 @@
+<Sprite
+ filename="mods/extol_space_journey/files/entities/pickup/corruption.png"
+ offset_x="6"
+ offset_y="5"
+ default_animation="help"  
+ >
+
+ <RectAnimation
+  name="help"
+  pos_x="0"
+  pos_y="0"
+  frame_count="4"
+  frame_width="12"
+  frame_height="11"
+  frame_wait="0.23"
+  frames_per_row="6"
+  loop="1"   >
+ </RectAnimation>
+
+</Sprite>

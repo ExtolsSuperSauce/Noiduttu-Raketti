@@ -6,6 +6,31 @@
 	script_source_file="mods/extol_space_journey/files/scripts/gui.lua"
   ></LuaComponent>
   
+  <AudioLoopComponent
+	file="mods/extol_space_journey/files/audio/extol_space.bank"
+	event_name="music/division"
+	auto_play="1"
+  ></AudioLoopComponent>
+  
+  <AudioLoopComponent
+	_tags="alarm"
+	_enabled="0"
+	file="mods/extol_space_journey/files/audio/extol_space.bank"
+	event_name="sounds/alarm"
+	play_on_component_enable="1"
+  ></AudioLoopComponent>
+  
+  <AudioComponent
+	file="mods/extol_space_journey/files/audio/extol_space.bank"
+	event_root="sounds/corruption"
+  ></AudioComponent>
+  
+  <VariableStorageComponent
+	name="upgrade"
+	value_int="1"
+	value_string="1"
+  ></VariableStorageComponent>
+  
   <VariableStorageComponent
 	name="fuel"
 	value_int="50"
@@ -14,9 +39,10 @@
   ></VariableStorageComponent>
   
   <VariableStorageComponent
-	name="upgrade"
-	value_int="1"
-	value_string="1"
+	name="info"
+	value_int=""
+	value_float="50"
+	value_string=""
   ></VariableStorageComponent>
   
   <PhysicsBody2Component
@@ -25,6 +51,7 @@
   	linear_damping="1"
     kill_entity_after_initialized="0"
 	kill_entity_if_body_destroyed="0"
+	manual_init="1"
 	>
   </PhysicsBody2Component>
 
