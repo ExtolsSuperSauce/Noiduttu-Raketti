@@ -1,4 +1,9 @@
 -- HELPER FUNCTIONS
+
+local function lerp(a, b, weight)
+	return a * weight + b * (1 - weight)
+end
+
 local function get_magnitude( x, y )
 	local result = math.sqrt( x ^ 2 + y ^ 2 )
 	return result
@@ -35,14 +40,14 @@ local rot_list = {
 }
 
 local fuel_list = {
-	{ amount = 50, cost = 50 },
-	{ amount = 120, cost = 120 },
-	{ amount = 250, cost = 250 },
+	{ amount = 50, cost = 100 },
+	{ amount = 120, cost = 250 },
+	{ amount = 250, cost = 500 },
 	{ amount = 600, cost = 0 }
 }
 
 local player = GetUpdatedEntityID()
-
+local x, y, rotation = EntityGetTransform(player)
 local storage_comps = EntityGetComponent(player, "VariableStorageComponent")
 local fuel_component = 0
 local upgrade_component = 0
@@ -57,6 +62,26 @@ for _, comp in ipairs(storage_comps) do
 	end
 end
 
+-- CLOUDS/SKY SHIFT
+local world_state = GameGetWorldStateEntity()
+local world_comp = EntityGetFirstComponent(world_state, "WorldStateComponent")
+local current_time = ComponentGetValue2(world_comp, "time")
+if y < -7000 then
+	local time_interp = lerp(current_time,0.55,0.995)
+	ComponentSetValue2(world_comp,"time", time_interp)
+
+else
+	local time_interp = lerp(current_time,0.24,0.995)
+	ComponentSetValue2(world_comp,"time", time_interp)
+end
+
+local setting_music_volume = ModSettingGet("extol_space_journey.extol_music_volume")
+if setting_music_volume == nil then
+	setting_music_volume = 1
+end
+local dynamic_volume = math.max(math.min(y/-7000,1)*setting_music_volume,0.01)
+local music_comp = EntityGetFirstComponent(player, "AudioLoopComponent", "extol_music_player")
+ComponentSetValue2(music_comp,"m_volume",dynamic_volume)
 
 -- Money increment + "back to start"
 local fuel = ComponentGetValue2(fuel_component, "value_float")
@@ -79,6 +104,7 @@ if not GameHasFlagRun("extol_rocket_return") then
 	ComponentSetValue2(info_component, "value_float", 60)
 	ComponentSetValue2(info_component, "value_int", 0)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
+	EntitySetComponentsWithTagEnabled(player, "rocket_flame", false)
 end
 
 gui = gui or GuiCreate()
@@ -166,7 +192,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		local upgrade_flight = GuiImageButton(gui, 10, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
+		local upgrade_flight = GuiImageButton(gui, 11, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
 		if upgrade_flight then
 			ComponentSetValue2(upgrade_component, "value_string", tostring(rot_level + 1))
 			ComponentSetValue2(wallet_comp, "money", cash - rot_list[rot_level].cost)
@@ -177,10 +203,10 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 10, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
+		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
-
-	-- PLANET SELECTION TODO!!!!!
+  
+  --PLANET SELECTION
 	local planet_selection = ComponentGetValue2(info_component, "value_int")
 	local planet_select_list = {
 		{ name = "Moon",        	related_tag = "extol_first_moon" },
@@ -195,12 +221,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "sraM",     	 related_tag = "extol_glitch_mars" },
 		{ name = "The Eye",  	 related_tag = "extol_the_eye",            	 required_tag = "extol_glitch_moon" },
 		{ name = "The Mirror", related_tag = "extol_the_mirror",       	 	 required_tag = "extol_glitch_mars" },
-		{ name = "DEATH",      related_tag = "extol_milliways_found",    	 required_tag = "extol_the_eye" },
+		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens",    	 required_tag = "extol_the_eye" },
 		{ name = "NATURE",   	 related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
-
-
-
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
 	local sprite_file = "mods/extol_space_journey/files/gui/question.png"
 	local gui_var_y = 0.27
@@ -289,16 +312,14 @@ end
 end]]
 
 local flying = ComponentGetValue2(controls, "mButtonDownFly")
-local x, y, rotation = EntityGetTransform(player)
 local fly_level = ComponentGetValue2(upgrade_component,"value_int")
 if flying and fuel > 0 then
 	local fly_force_x, fly_force_y = vec_rotate(0, fly_list[fly_level].amount, rotation)
 	PhysicsApplyForce(player, fly_force_x, fly_force_y)
 	ComponentSetValue2(fuel_component, "value_float", fuel - 0.075)
-	-- surely theres a better way to make this happen without having to call ComponentSetValue2 every frame?
-	ComponentSetValue2(rocket_flame_comp, "custom_alpha", -1)
+	EntitySetComponentsWithTagEnabled(player,"rocket_flame",true)
 else
-	ComponentSetValue2(rocket_flame_comp, "custom_alpha", 0)
+	EntitySetComponentsWithTagEnabled(player,"rocket_flame",false)
 end
 
 -- Prevent player from opening the inventory
@@ -382,5 +403,6 @@ else
 		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
 	end
 end
+
 
 GuiStartFrame(gui)

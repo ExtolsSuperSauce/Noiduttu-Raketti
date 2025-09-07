@@ -7,6 +7,7 @@
   ></LuaComponent>
 
   <AudioLoopComponent
+	_tags="extol_music_player"
 	file="mods/extol_space_journey/files/audio/extol_space.bank"
 	event_name="music/division"
 	auto_play="1"
@@ -19,11 +20,6 @@
 	event_name="sounds/alarm"
 	play_on_component_enable="1"
   ></AudioLoopComponent>
-
-  <AudioComponent
-	file="mods/extol_space_journey/files/audio/extol_space.bank"
-	event_root="sounds/corruption"
-  ></AudioComponent>
 
   <VariableStorageComponent
 	name="upgrade"
@@ -247,8 +243,9 @@
 
   <ParticleEmitterComponent
     _tags="rocket_flame"
+	_enabled="0"
     emitted_material_name="spark"
-    custom_alpha="0"
+    custom_alpha="-1"
     offset.x="0"
     offset.y="14.5"
     x_pos_offset_min="-3"
@@ -279,4 +276,11 @@
     is_emitting="1"
     >
   </ParticleEmitterComponent>
+  
+  <AudioLoopComponent
+	  _tags="rocket_flame"
+	  file="data/audio/Desktop/player.bank"
+	  event_name="player/jetpack"
+	  play_on_component_enable="1"
+  ></AudioLoopComponent>
 </Entity>
