@@ -26,23 +26,23 @@ end
 
 -- UPGRADES
 local fly_list = {
-	{ amount = -50, cost = 1000 },
-	{ amount = -75, cost = 2000 },
-	{ amount = -90, cost = 5000 },
+	{ amount = -50, cost = 300 },
+	{ amount = -65, cost = 650 },
+	{ amount = -85, cost = 1200 },
 	{ amount = -100, cost = 0 }
 }
 local rot_list = {
-	{ amount = 4, cost = 500 },
-	{ amount = 6, cost = 1000 },
-	{ amount = 8, cost = 2500 },
-	{ amount = 10, cost = 0 }
+	{ amount = 6, cost = 150 },
+	{ amount = 8, cost = 350 },
+	{ amount = 10, cost = 800 },
+	{ amount = 12, cost = 0 }
 }
 
 local fuel_list = {
-	{ amount = 50, cost = 100 },
-	{ amount = 120, cost = 250 },
-	{ amount = 250, cost = 500 },
-	{ amount = 600, cost = 0 }
+	{ amount = 50, cost = 200 },
+	{ amount = 80, cost = 550 },
+	{ amount = 120, cost = 1300 },
+	{ amount = 150, cost = 0 }
 }
 
 local player = GetUpdatedEntityID()
@@ -135,7 +135,6 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	local cash = ComponentGetValue2(wallet_comp, "money")
 
 	-- FUEL
-
 	local fuel_level = ComponentGetValue2(fuel_component,"value_string")
 	fuel_level = tonumber(fuel_level)
 	if fuel_list[fuel_level].cost <= cash and fuel_list[fuel_level].cost > 0 then
@@ -183,7 +182,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	end
 
 	-- ROTATION
-	local rot_level = ComponentGetValue2(upgrade_component,"value_int")
+	local rot_level = ComponentGetValue2(upgrade_component,"value_string")
 	rot_level = tonumber(rot_level)
 	if rot_list[rot_level].cost <= cash and rot_list[rot_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
@@ -351,9 +350,12 @@ if record_height > y then
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
 elseif record_height < y - 500 then
 	GameRemoveFlagRun("extol_rocket_return")
-elseif record_height < y - 350 then
+elseif record_height < y - 350 or fuel <= 0 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", true)
-	GuiImage(gui, 50, res_x * 0.24, res_y * 0.85, "mods/extol_space_journey/files/gui/alert.png", 1, 1)
+	local return_me = GuiImageButton(gui, 50, res_x * 0.24, res_y * 0.85,"[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
+	if return_me then
+		GameRemoveFlagRun("extol_rocket_return")
+	end
 elseif y > 100 then
 	GameRemoveFlagRun("extol_rocket_return")
 else

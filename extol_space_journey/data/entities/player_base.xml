@@ -278,9 +278,9 @@
   </ParticleEmitterComponent>
   
   <AudioLoopComponent
-	_tags="rocket_flame"
-	file="data/audio/Desktop/player.bank"
-	event_name="player/jetpack"
-	play_on_component_enable="1"
+	  _tags="rocket_flame"
+	  file="data/audio/Desktop/player.bank"
+	  event_name="player/jetpack"
+	  play_on_component_enable="1"
   ></AudioLoopComponent>
 </Entity>
