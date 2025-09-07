@@ -191,7 +191,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		local upgrade_flight = GuiImageButton(gui, 10, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
+		local upgrade_flight = GuiImageButton(gui, 11, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
 		if upgrade_flight then
 			ComponentSetValue2(upgrade_component, "value_string", tostring(rot_level + 1))
 			ComponentSetValue2(wallet_comp, "money", cash - rot_list[rot_level].cost)
@@ -202,7 +202,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 10, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
+		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
 
 	-- PLANET SELECTION
