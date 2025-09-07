@@ -1,4 +1,5 @@
 -- HELPER FUNCTIONS
+
 local function lerp(a, b, weight)
 	return a * weight + b * (1 - weight)
 end
@@ -204,8 +205,8 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
-
-	-- PLANET SELECTION
+  
+  --PLANET SELECTION
 	local planet_selection = ComponentGetValue2(info_component, "value_int")
 	local planet_select_list = {
 		{ name = "Moon",        	related_tag = "extol_first_moon" },
@@ -223,7 +224,6 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens",    	 required_tag = "extol_the_eye" },
 		{ name = "NATURE",   	 related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
-
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
 	local sprite_file = "mods/extol_space_journey/files/gui/question.png"
 	local gui_var_y = 0.27
@@ -298,6 +298,7 @@ local controls = EntityGetFirstComponent(player, "ControlsComponent")
 local left = ComponentGetValue2(controls, "mButtonDownLeft")
 local right = ComponentGetValue2(controls, "mButtonDownRight")
 local rot_level = ComponentGetValue2(upgrade_component, "value_string")
+local rocket_flame_comp = EntityGetFirstComponent(player, "ParticleEmitterComponent", "rocket_flame")
 rot_level = tonumber(rot_level)
 if left then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
