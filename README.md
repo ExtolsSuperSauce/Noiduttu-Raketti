@@ -11,4 +11,7 @@ Planet Sprites/Pixel Scenes (`_pixel_scenes.xml`)
 
 Height to Money script/return to start (`gui.lua`)
 
+"Softlock" prevention (see: The Eyes pixel scene) (`gui.lua`)
+More context: It is currently very easy to get your rocketship stuck in there
+
 Workshop Preview Image
