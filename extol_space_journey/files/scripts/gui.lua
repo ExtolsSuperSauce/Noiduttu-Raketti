@@ -14,7 +14,7 @@ local function vec_rotate(x, y, angle)
 	local sa = math.sin(angle)
 	local px = ca * x - sa * y
 	local py = sa * x + ca * y
-	return px,py
+	return px, py
 end
 
 local function vec_normalize(x, y)
@@ -22,7 +22,7 @@ local function vec_normalize(x, y)
 	if m == 0 then return 0,0 end
 	x = x / m
 	y = y / m
-	return x,y
+	return x, y
 end
 
 -- UPGRADES
@@ -204,7 +204,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
-  
+
   --PLANET SELECTION
 	local planet_selection = ComponentGetValue2(info_component, "value_int")
 	local planet_select_list = {
@@ -389,7 +389,7 @@ if not GameHasFlagRun("extol_corrupt_me") then
 		local indicator_distance = 32
 		local dir_x = planet_list[planet_index].pos_x - x
 		local dir_y = planet_list[planet_index].pos_y - y
-		dir_x,dir_y = vec_normalize(dir_x,dir_y)
+		dir_x, dir_y = vec_normalize(dir_x, dir_y)
 		local indicator_x = x + dir_x * indicator_distance
 		local indicator_y = y + dir_y * indicator_distance
 		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
@@ -399,12 +399,11 @@ else
 		local indicator_distance = 32
 		local dir_x = corrupt_list[planet_index].pos_x - x
 		local dir_y = corrupt_list[planet_index].pos_y - y
-		dir_x,dir_y = vec_normalize(dir_x,dir_y)
+		dir_x, dir_y = vec_normalize(dir_x, dir_y)
 		local indicator_x = x + dir_x * indicator_distance
 		local indicator_y = y + dir_y * indicator_distance
-		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
+		GameCreateSpriteForXFrames( "mods/extol_space_journey/files/gui/glitch_radar/glitch_radar_moon" .. Random(0, 5) .. ".png", indicator_x, indicator_y ) -- not too sure about this right now but could be cool
 	end
 end
-
 
 GuiStartFrame(gui)
