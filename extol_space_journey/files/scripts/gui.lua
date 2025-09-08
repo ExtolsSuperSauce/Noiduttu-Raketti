@@ -1,4 +1,5 @@
 -- HELPER FUNCTIONS
+
 local function lerp(a, b, weight)
 	return a * weight + b * (1 - weight)
 end
@@ -13,7 +14,7 @@ local function vec_rotate(x, y, angle)
 	local sa = math.sin(angle)
 	local px = ca * x - sa * y
 	local py = sa * x + ca * y
-	return px,py
+	return px, py
 end
 
 local function vec_normalize(x, y)
@@ -21,7 +22,7 @@ local function vec_normalize(x, y)
 	if m == 0 then return 0,0 end
 	x = x / m
 	y = y / m
-	return x,y
+	return x, y
 end
 
 -- UPGRADES
@@ -65,13 +66,21 @@ end
 local world_state = GameGetWorldStateEntity()
 local world_comp = EntityGetFirstComponent(world_state, "WorldStateComponent")
 local current_time = ComponentGetValue2(world_comp, "time")
-if y < -7000 then
-	local time_interp = lerp(current_time,0.55,0.995)
+if y < -5000 then
+	local time_interp = lerp(current_time,0.56,0.999)
 	ComponentSetValue2(world_comp,"time", time_interp)
 
 else
 	local time_interp = lerp(current_time,0.24,0.995)
 	ComponentSetValue2(world_comp,"time", time_interp)
+end
+local cloud_target = ComponentGetValue2(world_comp, "rain")
+if y < -3000 then
+	local cloud_interp = lerp(cloud_target,0,0.995)
+	ComponentSetValue2(world_comp,"rain", cloud_interp)
+else
+	local cloud_interp = lerp(cloud_target,0.8,0.995)
+	ComponentSetValue2(world_comp,"rain", cloud_interp)
 end
 
 local setting_music_volume = ModSettingGet("extol_space_journey.extol_music_volume")
@@ -93,19 +102,22 @@ if not GameHasFlagRun("extol_rocket_return") then
 	GameAddFlagRun("extol_rocket_return")
 	GameAddFlagRun("extol_space_selection_gui")
 	GameRemoveFlagRun("extol_corrupt_me")
+	GameRemoveFlagRun("extol_petri_poke")
+	GameRemoveFlagRun("extol_rocket_success")
 	planet_index = nil
 	local wallet_comp = EntityGetFirstComponent(player, "WalletComponent")
 	local cash = ComponentGetValue2(wallet_comp, "money")
 	local previous_height = ComponentGetValue2(info_component, "value_float")
-	-- math.abs() used because previous_height was in the negative (+y is down, -y is up), turning our money into -money
 	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / 50) + cash)
 	ComponentSetValue2(fuel_component, "value_float", fuel_tank)
-	ComponentSetValue2(info_component, "value_float", 60)
+	ComponentSetValue2(info_component, "value_float", 0)
 	ComponentSetValue2(info_component, "value_int", 0)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
 	EntitySetComponentsWithTagEnabled(player, "rocket_flame", false)
 end
 
+
+-- GUI
 gui = gui or GuiCreate()
 local res_x, res_y = GuiGetScreenDimensions(gui)
 
@@ -124,7 +136,6 @@ local res_x, res_y = GuiGetScreenDimensions(gui)
 	end
 
 if GameHasFlagRun("extol_space_selection_gui") then
-	--TODO GUI
 	local _, bg_offset_y = GuiGetImageDimensions(gui, "mods/extol_space_journey/files/gui/shop.png", 1)
 	bg_offset_y = bg_offset_y * 0.5
 	GuiOptionsAddForNextWidget(gui,16)
@@ -204,7 +215,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
 
-	-- PLANET SELECTION
+  --PLANET SELECTION
 	local planet_selection = ComponentGetValue2(info_component, "value_int")
 	local planet_select_list = {
 		{ name = "Moon",        	related_tag = "extol_first_moon" },
@@ -219,10 +230,9 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "sraM",     	 related_tag = "extol_glitch_mars" },
 		{ name = "The Eye",  	 related_tag = "extol_the_eye",            	 required_tag = "extol_glitch_moon" },
 		{ name = "The Mirror", related_tag = "extol_the_mirror",       	 	 required_tag = "extol_glitch_mars" },
-		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens",    	 required_tag = "extol_the_eye" },
+		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens_;p",    	 required_tag = "extol_the_eye" },
 		{ name = "NATURE",   	 related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
-
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
 	local sprite_file = "mods/extol_space_journey/files/gui/question.png"
 	local gui_var_y = 0.27
@@ -279,12 +289,19 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	end
 
 	-- LAUNCH!
-	GuiOptionsAddForNextWidget(gui, 16)
-	local launch = GuiImageButton(gui, 2, res_x * 0.6, res_y * 0.67, "", "mods/extol_space_journey/files/gui/launch.png")
-	if launch and planet_selection ~= 0 then
-		GameRemoveFlagRun("extol_space_selection_gui")
-		if corrupt_access then
-			GameAddFlagRun("extol_corrupt_me")
+	if planet_selection == 0 then
+		GuiOptionsAddForNextWidget(gui, 16)
+		GuiImage(gui, 2, res_x * 0.5, res_y * 0.67, "mods/extol_space_journey/files/gui/launch.png", 0.75, 1)
+		GuiOptionsAddForNextWidget(gui, 16)
+		GuiText(gui, res_x * 0.5, res_y * 0.65, "SELECT DESTINATION!")
+	else
+		GuiOptionsAddForNextWidget(gui, 16)
+		local launch = GuiImageButton(gui, 2, res_x * 0.5, res_y * 0.67, "", "mods/extol_space_journey/files/gui/launch.png")
+		if launch then
+			GameRemoveFlagRun("extol_space_selection_gui")
+			if corrupt_access then
+				GameAddFlagRun("extol_corrupt_me")
+			end
 		end
 	end
 	GuiStartFrame(gui)
@@ -297,6 +314,7 @@ local controls = EntityGetFirstComponent(player, "ControlsComponent")
 local left = ComponentGetValue2(controls, "mButtonDownLeft")
 local right = ComponentGetValue2(controls, "mButtonDownRight")
 local rot_level = ComponentGetValue2(upgrade_component, "value_string")
+local rocket_flame_comp = EntityGetFirstComponent(player, "ParticleEmitterComponent", "rocket_flame")
 rot_level = tonumber(rot_level)
 if left then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
@@ -344,6 +362,7 @@ end
 GuiColorSetForNextWidget(gui, color[1], color[2], 0, 0)
 GuiImage(gui, 3, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fuel_indicator.png", 0.75, scale, 1)
 
+-- ALERT
 local record_height = ComponentGetValue2(info_component, "value_float")
 if record_height > y then
 	ComponentSetValue2(info_component, "value_float", y)
@@ -352,7 +371,7 @@ elseif record_height < y - 500 then
 	GameRemoveFlagRun("extol_rocket_return")
 elseif record_height < y - 350 or fuel <= 0 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", true)
-	local return_me = GuiImageButton(gui, 50, res_x * 0.24, res_y * 0.85,"[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
+	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85,"[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
 	if return_me then
 		GameRemoveFlagRun("extol_rocket_return")
 	end
@@ -362,6 +381,12 @@ else
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
 end
 
+if GameHasFlagRun("extol_rocket_success") then
+	local return_me = GuiImageButton(gui, 2026, res_x * 0.24, res_y * 0.9,"[RETURN]", "mods/extol_space_journey/files/gui/success.png")
+	if return_me then
+		GameRemoveFlagRun("extol_rocket_return")
+	end
+end
 
 -- Planet Radar
 local planet_list = {
@@ -388,22 +413,21 @@ if not GameHasFlagRun("extol_corrupt_me") then
 		local indicator_distance = 32
 		local dir_x = planet_list[planet_index].pos_x - x
 		local dir_y = planet_list[planet_index].pos_y - y
-		dir_x,dir_y = vec_normalize(dir_x,dir_y)
+		dir_x, dir_y = vec_normalize(dir_x, dir_y)
 		local indicator_x = x + dir_x * indicator_distance
 		local indicator_y = y + dir_y * indicator_distance
 		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
 	end
 else
 	if planet_index ~= 0 then
-		local indicator_distance = 32
-		local dir_x = corrupt_list[planet_index].pos_x - x
-		local dir_y = corrupt_list[planet_index].pos_y - y
-		dir_x,dir_y = vec_normalize(dir_x,dir_y)
+		local indicator_distance = Random(31,33)
+		local dir_x = corrupt_list[planet_index].pos_x - x + Random(-20,20)
+		local dir_y = corrupt_list[planet_index].pos_y - y + Random(-20,20)
+		dir_x, dir_y = vec_normalize(dir_x, dir_y)
 		local indicator_x = x + dir_x * indicator_distance
 		local indicator_y = y + dir_y * indicator_distance
-		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
+		GameCreateSpriteForXFrames( "mods/extol_space_journey/files/gui/glitch_radar/glitch_radar_moon" .. Random(0, 5) .. ".png", indicator_x, indicator_y )
 	end
 end
-
 
 GuiStartFrame(gui)

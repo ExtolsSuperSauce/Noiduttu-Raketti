@@ -12,6 +12,7 @@ function collision_trigger(collider)
 				ComponentSetValue2(vsc,"value_bool",false)
 				local sprite_comp = EntityGetFirstComponent(eid,"SpriteComponent")
 				ComponentSetValue2(sprite_comp,"alpha",0.6)
+				break
 			end
 		end
 	end

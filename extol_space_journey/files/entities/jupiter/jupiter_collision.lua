@@ -4,6 +4,9 @@ function collision_trigger(collider)
 		local wallet = EntityGetFirstComponent(collider, "WalletComponent")
 		local money = ComponentGetValue2(wallet, "money")
 		ComponentSetValue2(wallet, "money", money + 225) -- jupiter can return a little more since its a big planet?
-		GameRemoveFlagRun("extol_rocket_return")
+		local x,y = EntityGetTransform(collider)
+		GamePlaySound("data/audio/Desktop/event_cues.bank","event_cues/goldnugget",x,y)
+		GamePrint("Success! Return when you are ready!")
+		GameAddFlagRun("extol_rocket_success")
 	end
 end
