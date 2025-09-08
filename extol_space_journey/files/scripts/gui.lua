@@ -67,20 +67,19 @@ local world_state = GameGetWorldStateEntity()
 local world_comp = EntityGetFirstComponent(world_state, "WorldStateComponent")
 local current_time = ComponentGetValue2(world_comp, "time")
 if y < -5000 then
-	local time_interp = lerp(current_time,0.56,0.999)
-	ComponentSetValue2(world_comp,"time", time_interp)
-
+	local time_interp = lerp(current_time, 0.56, 0.999)
+	ComponentSetValue2(world_comp, "time", time_interp)
 else
-	local time_interp = lerp(current_time,0.24,0.995)
-	ComponentSetValue2(world_comp,"time", time_interp)
+	local time_interp = lerp(current_time, 0.24, 0.995)
+	ComponentSetValue2(world_comp, "time", time_interp)
 end
 local cloud_target = ComponentGetValue2(world_comp, "rain")
 if y < -3000 then
-	local cloud_interp = lerp(cloud_target,0,0.995)
-	ComponentSetValue2(world_comp,"rain", cloud_interp)
+	local cloud_interp = lerp(cloud_target, 0, 0.995)
+	ComponentSetValue2(world_comp, "rain", cloud_interp)
 else
-	local cloud_interp = lerp(cloud_target,0.8,0.995)
-	ComponentSetValue2(world_comp,"rain", cloud_interp)
+	local cloud_interp = lerp(cloud_target, 0.8, 0.995)
+	ComponentSetValue2(world_comp, "rain", cloud_interp)
 end
 
 local setting_music_volume = ModSettingGet("extol_space_journey.extol_music_volume")
@@ -218,20 +217,20 @@ if GameHasFlagRun("extol_space_selection_gui") then
   --PLANET SELECTION
 	local planet_selection = ComponentGetValue2(info_component, "value_int")
 	local planet_select_list = {
-		{ name = "Moon",        	related_tag = "extol_first_moon" },
-		{ name = "Mars",        	related_tag = "extol_first_mars" },
-		{ name = "Jupiter",     	related_tag = "extol_jupiter_moon",       	required_tag = "extol_first_moon" },
-		{ name = "Venus",       	related_tag = "extol_visit_venus",        	required_tag = "extol_first_mars" },
-		{ name = "Distant Light", related_tag = "extol_milliways_found",  		required_tag = "extol_visit_venus" },
-		{ name = "CHAOS",       	related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
+		{ name = "Moon",          related_tag = "extol_first_moon" },
+		{ name = "Mars",          related_tag = "extol_first_mars" },
+		{ name = "Jupiter",       related_tag = "extol_jupiter_moon",         required_tag = "extol_first_moon" },
+		{ name = "Venus",         related_tag = "extol_visit_venus",          required_tag = "extol_first_mars" },
+		{ name = "Distant Light", related_tag = "extol_milliways_found",      required_tag = "extol_visit_venus" },
+		{ name = "CHAOS",         related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 	local corrupt_select_list = {
-		{ name = "Moon?",    	 related_tag = "extol_glitch_moon" },
-		{ name = "sraM",     	 related_tag = "extol_glitch_mars" },
-		{ name = "The Eye",  	 related_tag = "extol_the_eye",            	 required_tag = "extol_glitch_moon" },
-		{ name = "The Mirror", related_tag = "extol_the_mirror",       	 	 required_tag = "extol_glitch_mars" },
-		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens_;p",    	 required_tag = "extol_the_eye" },
-		{ name = "NATURE",   	 related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
+		{ name = "Moon?",      related_tag = "extol_glitch_moon" },
+		{ name = "sraM",       related_tag = "extol_glitch_mars" },
+		{ name = "The Eye",    related_tag = "extol_the_eye",              required_tag = "extol_glitch_moon" },
+		{ name = "The Mirror", related_tag = "extol_the_mirror",           required_tag = "extol_glitch_mars" },
+		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens_;p",  required_tag = "extol_the_eye" },
+		{ name = "NATURE",     related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
 	local sprite_file = "mods/extol_space_journey/files/gui/question.png"
@@ -371,7 +370,7 @@ elseif record_height < y - 500 then
 	GameRemoveFlagRun("extol_rocket_return")
 elseif record_height < y - 350 or fuel <= 0 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", true)
-	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85,"[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
+	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85, "[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
 	if return_me then
 		GameRemoveFlagRun("extol_rocket_return")
 	end
@@ -382,7 +381,7 @@ else
 end
 
 if GameHasFlagRun("extol_rocket_success") then
-	local return_me = GuiImageButton(gui, 2026, res_x * 0.24, res_y * 0.9,"[RETURN]", "mods/extol_space_journey/files/gui/success.png")
+	local return_me = GuiImageButton(gui, 2026, res_x * 0.24, res_y * 0.9, "[RETURN]", "mods/extol_space_journey/files/gui/success.png")
 	if return_me then
 		GameRemoveFlagRun("extol_rocket_return")
 	end
@@ -390,21 +389,21 @@ end
 
 -- Planet Radar
 local planet_list = {
-	{ name = "moon",  pos_x = 0,   pos_y = -10000 },
-	{ name = "mars",  pos_x = 4200, pos_y = -15000 },
+	{ name = "moon",    pos_x = 0,     pos_y = -10000 },
+	{ name = "mars",    pos_x = 4200,  pos_y = -15000 },
 	{ name = "juptier", pos_x = -2000, pos_y = -20000 },
-	{ name = "venus", pos_x = -6000, pos_y = -14000 },
-	{ name = "???",   pos_x = 1000, pos_y = -30000 },
-	{ name = "???",   pos_x = -6666, pos_y = -25000 }
+	{ name = "venus",   pos_x = -6000, pos_y = -14000 },
+	{ name = "???",     pos_x = 1000,  pos_y = -30000 },
+	{ name = "???",     pos_x = -6666, pos_y = -25000 }
 }
 
 local corrupt_list = {
-	{ name = "moon",  pos_x = 3000, pos_y = -9900 },
-	{ name = "mars",  pos_x = -4200, pos_y = -16000 },
+	{ name = "moon",    pos_x = 3000,   pos_y = -9900 },
+	{ name = "mars",    pos_x = -4200,  pos_y = -16000 },
 	{ name = "the_eye", pos_x = -17185, pos_y = -6424 },
-	{ name = "venus", pos_x = 0,    pos_y = -20000 },
-	{ name = "???",   pos_x = -3500, pos_y = -35000 },
-	{ name = "???",   pos_x = 7777, pos_y = -25000 }
+	{ name = "venus",   pos_x = 0,      pos_y = -20000 },
+	{ name = "???",     pos_x = -3500,  pos_y = -35000 },
+	{ name = "???",     pos_x = 7777,   pos_y = -25000 }
 }
 
 local planet_index = ComponentGetValue2(info_component, "value_int")
