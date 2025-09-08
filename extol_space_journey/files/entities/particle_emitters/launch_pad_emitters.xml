@@ -1,0 +1,21 @@
+<Entity>
+	<ParticleEmitterComponent
+		gravity.x="0"
+		gravity.y="10"
+		lifetime_min="4.5"
+		emit_only_if_there_is_space="1"
+		lifetime_max="5"
+		airflow_force="0.25"
+		set_magic_creation="1"
+		fade_based_on_lifetime="1"
+		emitted_material_name="spark_blue"
+		emit_cosmetic_particles="1"
+		collide_with_grid="0"
+		x_pos_offset_min="-30"
+		x_pos_offset_max="30"
+		y_pos_offset_min="-2"
+		y_pos_offset_max="5"
+		count_min="2"
+		count_max="3"
+	></ParticleEmitterComponent>
+</Entity>
