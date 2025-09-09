@@ -4,7 +4,7 @@ function collision_trigger(collider)
 	local vsc = EntityGetFirstComponent(eid, "VariableStorageComponent")
 	if ComponentGetValue2(vsc, "value_bool") then
 		local collider_storages = EntityGetComponent(collider, "VariableStorageComponent")
-		GamePlaySound("data/audio/Desktop/ui.bank", "ui/item_equipped", x, y)
+		GameEntityPlaySound(collider, "liquid_container_hit")
 		for _, component in ipairs(collider_storages) do
 			if ComponentGetValue2(component, "name") == "fuel" then
 				local fuel_max = ComponentGetValue2(component, "value_int")

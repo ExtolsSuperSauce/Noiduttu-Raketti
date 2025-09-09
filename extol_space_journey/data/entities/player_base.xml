@@ -1,6 +1,6 @@
 <Entity
   name="DEBUG_NAME:player"
-  tags="mortal,human,hittable,peasant,prey,player_unit,teleportable" >
+  tags="mortal,human,hittable,peasant,prey,player_unit,teleportable">
 
   <LuaComponent
 	script_source_file="mods/extol_space_journey/files/scripts/gui.lua"
@@ -12,6 +12,18 @@
 	event_name="music/division"
 	auto_play="1"
   ></AudioLoopComponent>
+  
+  <AudioComponent
+	file="data/audio/Desktop/materials.bank"
+	event_root="collision/glass_potion"
+	set_latest_event_position="1"
+  ></AudioComponent>
+  
+  <AudioComponent
+	file="data/audio/Desktop/misc.bank"
+	event_root="misc/telekinesis"
+	set_latest_event_position="1"
+  ></AudioComponent>
 
   <AudioLoopComponent
 	_tags="alarm"
