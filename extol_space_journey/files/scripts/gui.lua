@@ -119,20 +119,6 @@ end
 gui = gui or GuiCreate()
 local res_x, res_y = GuiGetScreenDimensions(gui)
 
-	--screen space testing tech
-	TEMPY = TEMPY or false
-	local testing_bool = GuiButton(gui, 12000, 10, 10, "+")
-	if testing_bool then
-		TEMPY = not TEMPY
-	end
-	if TEMPY then
-		local cc_id = EntityGetFirstComponentIncludingDisabled( player, "ControlsComponent" )
-		local mouse_x, mouse_y = ComponentGetValue2( cc_id, "mMousePositionRaw" )
-		mouse_x = mouse_x * 0.5
-		mouse_y = mouse_y * 0.5
-		print( mouse_x/res_x .. "  " .. mouse_y/res_y)
-	end
-
 if GameHasFlagRun("extol_space_selection_gui") then
 	local _, bg_offset_y = GuiGetImageDimensions(gui, "mods/extol_space_journey/files/gui/shop.png", 1)
 	bg_offset_y = bg_offset_y * 0.5
@@ -148,11 +134,11 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	fuel_level = tonumber(fuel_level)
 	if fuel_list[fuel_level].cost <= cash and fuel_list[fuel_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		local upgrade_fuel = GuiImageButton(gui, 9, res_x * 0.47, res_y * 0.3, "", "mods/extol_space_journey/files/gui/fuel_upgrade.png")
+		local upgrade_fuel = GuiImageButton(gui, 9, res_x * 0.51, res_y * 0.3, "", "mods/extol_space_journey/files/gui/fuel_upgrade.png")
 		if upgrade_fuel then
 			ComponentSetValue2(fuel_component, "value_string", tostring(fuel_level + 1))
 			ComponentSetValue2(fuel_component, "value_int", fuel_list[fuel_level + 1].amount)
@@ -161,33 +147,33 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		end
 	else
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.55, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.32, "Upgrade Cost: $" .. fuel_list[fuel_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.34, "Fuel Tank Level: " .. fuel_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 9, res_x * 0.47, res_y * 0.3, "mods/extol_space_journey/files/gui/fuel_upgrade.png", 0.3, 1)
+		GuiImage(gui, 9, res_x * 0.51, res_y * 0.3, "mods/extol_space_journey/files/gui/fuel_upgrade.png", 0.3, 1)
 	end
 
 	-- SPEED
 	local flight_level = ComponentGetValue2(upgrade_component,"value_int")
 	if fly_list[flight_level].cost <= cash and fly_list[flight_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.55, res_y * 0.42,"Upgrade Cost: $"..fly_list[flight_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.42,"Upgrade Cost: $"..fly_list[flight_level].cost)
 		GuiOptionsAddForNextWidget(gui,16)
-		GuiText(gui, res_x * 0.55 ,res_y * 0.44,"Speed Level: " .. flight_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.44,"Speed Level: " .. flight_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		local upgrade_flight = GuiImageButton (gui, 10, res_x * 0.47, res_y * 0.4, "", "mods/extol_space_journey/files/gui/speed_upgrade.png")
+		local upgrade_flight = GuiImageButton (gui, 10, res_x * 0.51, res_y * 0.4, "", "mods/extol_space_journey/files/gui/speed_upgrade.png")
 		if upgrade_flight then
 			ComponentSetValue2(upgrade_component, "value_int", flight_level + 1)
 			ComponentSetValue2(wallet_comp, "money", cash - fly_list[flight_level].cost)
 		end
 	else
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.42, "Upgrade Cost: $" .. fly_list[flight_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.42, "Upgrade Cost: $" .. fly_list[flight_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.44, "Speed Level: " .. flight_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.44, "Speed Level: " .. flight_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 10, res_x * 0.47, res_y * 0.4, "mods/extol_space_journey/files/gui/speed_upgrade.png", 0.3, 1)
+		GuiImage(gui, 10, res_x * 0.51, res_y * 0.4, "mods/extol_space_journey/files/gui/speed_upgrade.png", 0.3, 1)
 	end
 
 	-- ROTATION
@@ -195,22 +181,22 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	rot_level = tonumber(rot_level)
 	if rot_list[rot_level].cost <= cash and rot_list[rot_level].cost > 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.54, "Spin Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		local upgrade_flight = GuiImageButton(gui, 11, res_x * 0.47, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
+		local upgrade_flight = GuiImageButton(gui, 11, res_x * 0.51, res_y * 0.5, "", "mods/extol_space_journey/files/gui/spin_upgrade.png")
 		if upgrade_flight then
 			ComponentSetValue2(upgrade_component, "value_string", tostring(rot_level + 1))
 			ComponentSetValue2(wallet_comp, "money", cash - rot_list[rot_level].cost)
 		end
 	else
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
+		GuiText(gui, res_x * 0.6, res_y * 0.52, "Upgrade Cost: $" .. rot_list[rot_level].cost)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.55, res_y * 0.54, "Speed Level: " .. rot_level + 1)
+		GuiText(gui, res_x * 0.6, res_y * 0.54, "Spin Level: " .. rot_level + 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 11, res_x * 0.47, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
+		GuiImage(gui, 11, res_x * 0.51, res_y * 0.5, "mods/extol_space_journey/files/gui/spin_upgrade.png", 0.3, 1)
 	end
 
   --PLANET SELECTION
@@ -292,12 +278,12 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	-- LAUNCH!
 	if planet_selection == 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiImage(gui, 2, res_x * 0.5, res_y * 0.67, "mods/extol_space_journey/files/gui/launch.png", 0.75, 1)
+		GuiImage(gui, 2, res_x * 0.56, res_y * 0.67, "mods/extol_space_journey/files/gui/launch.png", 0.4, 1)
 		GuiOptionsAddForNextWidget(gui, 16)
-		GuiText(gui, res_x * 0.5, res_y * 0.65, "SELECT DESTINATION!")
+		GuiText(gui, res_x * 0.56, res_y * 0.65, "SELECT DESTINATION!")
 	else
 		GuiOptionsAddForNextWidget(gui, 16)
-		local launch = GuiImageButton(gui, 2, res_x * 0.5, res_y * 0.67, "", "mods/extol_space_journey/files/gui/launch.png")
+		local launch = GuiImageButton(gui, 2, res_x * 0.56, res_y * 0.67, "", "mods/extol_space_journey/files/gui/launch.png")
 		if launch then
 			GameRemoveFlagRun("extol_space_selection_gui")
 			if corrupt_access then
@@ -352,14 +338,7 @@ GuiZSetForNextWidget(gui, 1)
 GuiOptionsAddForNextWidget(gui, 16)
 GuiImage(gui, 2, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fuel_tank.png", 1, 1)
 GuiOptionsAddForNextWidget(gui, 16)
---TODO BETTER COLOR SHIFTING
-local color = {0,1}
-if scale < 0.5 then
-	color[1] = 1
-end
-if scale < 0.25 then
-	color[2] = 0
-end
+local color = {1 - scale, scale}
 GuiColorSetForNextWidget(gui, color[1], color[2], 0, 0)
 GuiImage(gui, 3, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fuel_indicator.png", 0.75, scale, 1)
 

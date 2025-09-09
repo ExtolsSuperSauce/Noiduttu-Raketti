@@ -6,7 +6,7 @@ function collision_trigger(collider)
 		PhysicsApplyForce(collider, 0, -3000)
 		local sprite_comp = EntityGetFirstComponent(eid, "SpriteComponent")
 		ComponentSetValue2(sprite_comp, "alpha", 0.6)
-		GamePlaySound("data/audio/Desktop/ui.bank", "ui/button_denied", x, y)
+		GameEntityPlaySound(collider, "throw")
 		ComponentSetValue2(vsc, "value_bool", false)
 	end
 end
