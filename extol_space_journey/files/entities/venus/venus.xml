@@ -27,6 +27,13 @@
 		emission_interval_min_frames="225"
 		emission_interval_max_frames="255"
 	></ParticleEmitterComponent>
+	<LightComponent
+		update_properties="1"
+		r="255"
+		g="255"
+		b="255"
+		radius="1000"
+	></LightComponent>
 	<CollisionTriggerComponent
 		radius="90"
 		destroy_this_entity_when_triggered="0"
