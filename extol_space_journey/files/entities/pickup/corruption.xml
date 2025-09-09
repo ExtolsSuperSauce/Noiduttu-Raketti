@@ -21,6 +21,7 @@
 		g="255"
 		b="255"
 		radius="32"
+		blinking_freq="0.5"
 	></LightComponent>
 	<SpriteParticleEmitterComponent
 		render_back="1"

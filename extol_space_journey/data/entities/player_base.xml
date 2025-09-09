@@ -12,13 +12,13 @@
 	event_name="music/division"
 	auto_play="1"
   ></AudioLoopComponent>
-  
+
   <AudioComponent
 	file="data/audio/Desktop/materials.bank"
 	event_root="collision/glass_potion"
 	set_latest_event_position="1"
   ></AudioComponent>
-  
+
   <AudioComponent
 	file="data/audio/Desktop/misc.bank"
 	event_root="misc/telekinesis"
@@ -287,14 +287,14 @@
     is_emitting="1"
     >
   </ParticleEmitterComponent>
-  
+
   <AudioLoopComponent
 	  _tags="rocket_flame"
 	  file="data/audio/Desktop/player.bank"
 	  event_name="player/jetpack"
 	  play_on_component_enable="1"
   ></AudioLoopComponent>
-  
+
   <SpriteParticleEmitterComponent
 	render_back="1"
 	is_emitting="0"
@@ -306,15 +306,15 @@
 	color_change.a="-1"
 	velocity_always_away_from_center="1"
 	randomize_position_inside_hitbox="1"
-	randomize_position.min_x="-5"
-	randomize_position.max_x="5"
-	randomize_position.min_y="-5"
-	randomize_position.max_y="5"
+	randomize_position.min_x="-10"
+	randomize_position.max_x="10"
+	randomize_position.min_y="-10"
+	randomize_position.max_y="10"
 	randomize_lifetime.max="0.6"
-	randomize_velocity.min_x="-15"
-	randomize_velocity.max_x="15"
-	randomize_velocity.min_y="-15"
-	randomize_velocity.max_y="15"
+	randomize_velocity.min_x="-30"
+	randomize_velocity.max_x="30"
+	randomize_velocity.min_y="-30"
+	randomize_velocity.max_y="30"
 	randomize_rotation.min="-10"
 	randomize_rotation.max="10"
 	count_min="2"
@@ -322,5 +322,5 @@
 	emission_interval_min_frames="200"
 	emission_interval_max_frames="600"
   ></SpriteParticleEmitterComponent>
-  
+
 </Entity>
