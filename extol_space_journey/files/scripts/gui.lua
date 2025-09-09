@@ -1,5 +1,4 @@
 -- HELPER FUNCTIONS
-
 local function lerp(a, b, weight)
 	return a * weight + b * (1 - weight)
 end
@@ -221,17 +220,20 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "Mars",          related_tag = "extol_first_mars" },
 		{ name = "Jupiter",       related_tag = "extol_jupiter_moon",         required_tag = "extol_first_moon" },
 		{ name = "Venus",         related_tag = "extol_visit_venus",          required_tag = "extol_first_mars" },
+		{ name = "Titan",       	related_tag = "extol_titan",         				required_tag = "extol_jupiter_moon" },
 		{ name = "Distant Light", related_tag = "extol_milliways_found",      required_tag = "extol_visit_venus" },
 		{ name = "CHAOS",         related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 	local corrupt_select_list = {
-		{ name = "Moon?",      related_tag = "extol_glitch_moon" },
-		{ name = "sraM",       related_tag = "extol_glitch_mars" },
-		{ name = "The Eye",    related_tag = "extol_the_eye",              required_tag = "extol_glitch_moon" },
-		{ name = "The Mirror", related_tag = "extol_the_mirror",           required_tag = "extol_glitch_mars" },
-		{ name = "DEATH",      related_tag = "extol_cthulhu_awakwens_;p",  required_tag = "extol_the_eye" },
-		{ name = "NATURE",     related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
+		{ name = "Moon?",         related_tag = "extol_glitch_moon" },
+		{ name = "sraM",          related_tag = "extol_glitch_mars" },
+		{ name = "The Eye",       related_tag = "extol_the_eye",              required_tag = "extol_glitch_moon" },
+		{ name = "The Mirror",    related_tag = "extol_the_mirror",           required_tag = "extol_glitch_mars" },
+		{ name = "The Leviathan", related_tag = "extol_the_leviathan",        required_tag = "extol_the_eye" },
+		{ name = "DEATH",         related_tag = "extol_cthulhu_awakwens_;p",  required_tag = "extol_the_mirror" },
+		{ name = "NATURE",        related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
+
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
 	local sprite_file = "mods/extol_space_journey/files/gui/question.png"
 	local gui_var_y = 0.27
@@ -393,17 +395,19 @@ local planet_list = {
 	{ name = "mars",    pos_x = 4200,  pos_y = -15000 },
 	{ name = "juptier", pos_x = -2000, pos_y = -20000 },
 	{ name = "venus",   pos_x = -6000, pos_y = -14000 },
+	{ name = "titan", 	pos_x = 10000, pos_y = -22000 },
 	{ name = "???",     pos_x = 1000,  pos_y = -30000 },
 	{ name = "???",     pos_x = -6666, pos_y = -25000 }
 }
 
 local corrupt_list = {
-	{ name = "moon",    pos_x = 3000,   pos_y = -9900 },
-	{ name = "mars",    pos_x = -4200,  pos_y = -16000 },
-	{ name = "the_eye", pos_x = -17185, pos_y = -6424 },
-	{ name = "venus",   pos_x = 0,      pos_y = -20000 },
-	{ name = "???",     pos_x = -3500,  pos_y = -35000 },
-	{ name = "???",     pos_x = 7777,   pos_y = -25000 }
+	{ name = "moon",         pos_x = 3000,   pos_y = -9900 },
+	{ name = "mars",         pos_x = -4200,  pos_y = -16000 },
+	{ name = "the_eye",      pos_x = -17185, pos_y = -6424 },
+	{ name = "venus",        pos_x = 0,      pos_y = -20000 },
+	{ name = "glitch_titan", pos_x = -10000, pos_y = -22000 },
+	{ name = "???",          pos_x = -3500,  pos_y = -35000 },
+	{ name = "???",          pos_x = 7777,   pos_y = -25000 }
 }
 
 local planet_index = ComponentGetValue2(info_component, "value_int")
