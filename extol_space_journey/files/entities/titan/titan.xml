@@ -5,6 +5,28 @@
 		offset_y="60"
 		z_index="1"
 	></SpriteComponent>
+	<ParticleEmitterComponent
+		emitted_material_name="spark"
+		emit_cosmetic_particles="1"
+		is_emitting="1"
+		draw_as_long="1"
+		gravity.y="0"
+		x_vel_min="-20"
+		x_vel_max="20"
+		y_vel_min="-20"
+		y_vel_max="20"
+		x_pos_offset_min="-82"
+		x_pos_offset_max="82"
+		y_pos_offset_min="-82"
+		y_pos_offset_max="82"
+		fade_based_on_lifetime="1"
+		lifetime_min="5.0"
+		lifetime_max="10.0"
+		count_min="100"
+		count_max="200"
+		emission_interval_min_frames="225"
+		emission_interval_max_frames="255"
+	></ParticleEmitterComponent>
 	<CollisionTriggerComponent
 		radius="82"
 		destroy_this_entity_when_triggered="0"
