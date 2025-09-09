@@ -16,3 +16,7 @@ function OnWorldInitialized()
 		vars.rain = 0
 	end)
 end
+
+function OnPlayerDied( player_entity )
+	GameTriggerGameOver()
+end

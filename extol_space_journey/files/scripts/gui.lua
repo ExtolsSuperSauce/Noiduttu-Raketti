@@ -24,6 +24,16 @@ local function vec_normalize(x, y)
 	return x, y
 end
 
+local function random_text( length )
+	local teststring = "abcdefghijklmnopqrstuvwxyz"
+	local result = ""
+	for i=1,length do
+		local random_char = Random(1,#teststring)
+		result = result .. string.sub(teststring,random_char,random_char)
+	end
+	return result
+end
+
 -- UPGRADES
 local fly_list = {
 	{ amount = -50, cost = 300 },
@@ -112,6 +122,8 @@ if not GameHasFlagRun("extol_rocket_return") then
 	ComponentSetValue2(info_component, "value_int", 0)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
 	EntitySetComponentsWithTagEnabled(player, "rocket_flame", false)
+	local spec = EntityGetFirstComponent(player, "SpriteParticleEmitterComponent")
+	ComponentSetValue2(spec, "is_emitting", false)
 end
 
 
@@ -206,17 +218,17 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "Mars",          related_tag = "extol_first_mars" },
 		{ name = "Jupiter",       related_tag = "extol_jupiter_moon",         required_tag = "extol_first_moon" },
 		{ name = "Venus",         related_tag = "extol_visit_venus",          required_tag = "extol_first_mars" },
-		{ name = "Titan",       	related_tag = "extol_titan",         				required_tag = "extol_jupiter_moon" },
+		{ name = "Titan",         related_tag = "extol_titan",				  required_tag = "extol_jupiter_moon" },
 		{ name = "Distant Light", related_tag = "extol_milliways_found",      required_tag = "extol_visit_venus" },
 		{ name = "CHAOS",         related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 	local corrupt_select_list = {
 		{ name = "Moon?",         related_tag = "extol_glitch_moon" },
 		{ name = "sraM",          related_tag = "extol_glitch_mars" },
-		{ name = "The Eye",       related_tag = "extol_the_eye",              required_tag = "extol_glitch_moon" },
-		{ name = "The Mirror",    related_tag = "extol_the_mirror",           required_tag = "extol_glitch_mars" },
-		{ name = "The Leviathan", related_tag = "extol_the_leviathan",        required_tag = "extol_the_eye" },
-		{ name = "DEATH",         related_tag = "extol_cthulhu_awakwens_;p",  required_tag = "extol_the_mirror" },
+		{ name = "The Eye",       related_tag = "extol_the_eye",			  required_tag = "extol_glitch_moon" },
+		{ name = "The Mirror",    related_tag = "extol_the_mirror",			  required_tag = "extol_glitch_mars" },
+		{ name = "The Leviathan", related_tag = "extol_the_leviathan",		  required_tag = "extol_the_eye" },
+		{ name = "insanity",	  related_tag = "?????extol?????", 			  required_tag = "extol_the_mirror" },
 		{ name = "NATURE",        related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 
@@ -236,14 +248,22 @@ if GameHasFlagRun("extol_space_selection_gui") then
 				if planet_selection == i then
 					GuiColorSetForNextWidget(gui,1,1,0,1)
 				end
-				local index_button = GuiButton(gui,30+i,res_x*0.35,res_y*(0.05*i+gui_var_y), destination.name )
+				if destination.name == "insanity" then
+					if GetValueInteger("extol_corruption_delay_"..i,0) <= GameGetFrameNum() then
+						destination.name = random_text(7)
+						ComponentSetValue2(info_component, "value_string", random_text(7))
+						SetValueInteger("extol_corruption_delay_"..i, GameGetFrameNum() + Random(45,240))
+					end
+					destination.name = string.upper(ComponentGetValue2(info_component, "value_string"))
+				end
+				local index_button = GuiButton(gui, 30+i, res_x * 0.35 , res_y * (0.05 * i + gui_var_y), destination.name )
 				if index_button then
 					ComponentSetValue2(info_component,"value_int",i)
 				end
 			else
 				GuiOptionsAddForNextWidget(gui,16)
 				GuiColorSetForNextWidget(gui,1,1,1,0.75)
-				GuiText(gui,res_x*0.35,res_y*(0.05*i+gui_var_y),"[LOCKED]")
+				GuiText(gui,res_x*0.35,res_y*(0.05*i+gui_var_y), "[LOCKED]")
 			end
 		end
 	else
@@ -288,6 +308,8 @@ if GameHasFlagRun("extol_space_selection_gui") then
 			GameRemoveFlagRun("extol_space_selection_gui")
 			if corrupt_access then
 				GameAddFlagRun("extol_corrupt_me")
+				local spec = EntityGetFirstComponent(player, "SpriteParticleEmitterComponent")
+				ComponentSetValue2(spec, "is_emitting", true)
 			end
 		end
 	end
@@ -347,9 +369,9 @@ local record_height = ComponentGetValue2(info_component, "value_float")
 if record_height > y then
 	ComponentSetValue2(info_component, "value_float", y)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
-elseif record_height < y - 500 then
+elseif record_height < y - 600 then
 	GameRemoveFlagRun("extol_rocket_return")
-elseif record_height < y - 350 or fuel <= 0 then
+elseif record_height < y - 475 or fuel <= 0 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", true)
 	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85, "[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
 	if return_me then

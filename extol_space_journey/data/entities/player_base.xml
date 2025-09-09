@@ -48,9 +48,8 @@
 
   <VariableStorageComponent
 	name="info"
-	value_int=""
-	value_float="50"
-	value_string=""
+	value_int="0"
+	value_float="0"
   ></VariableStorageComponent>
 
   <PhysicsBody2Component
@@ -295,4 +294,33 @@
 	  event_name="player/jetpack"
 	  play_on_component_enable="1"
   ></AudioLoopComponent>
+  
+  <SpriteParticleEmitterComponent
+	render_back="1"
+	is_emitting="0"
+	sprite_file="mods/extol_space_journey/files/entities/pickup/corruption_sprite.xml"
+	scale.x="0.15"
+	scale.y="0.15"
+	gravity.y="0"
+	lifetime="1"
+	color_change.a="-1"
+	velocity_always_away_from_center="1"
+	randomize_position_inside_hitbox="1"
+	randomize_position.min_x="-5"
+	randomize_position.max_x="5"
+	randomize_position.min_y="-5"
+	randomize_position.max_y="5"
+	randomize_lifetime.max="0.6"
+	randomize_velocity.min_x="-15"
+	randomize_velocity.max_x="15"
+	randomize_velocity.min_y="-15"
+	randomize_velocity.max_y="15"
+	randomize_rotation.min="-10"
+	randomize_rotation.max="10"
+	count_min="2"
+	count_max="3"
+	emission_interval_min_frames="200"
+	emission_interval_max_frames="600"
+  ></SpriteParticleEmitterComponent>
+  
 </Entity>
