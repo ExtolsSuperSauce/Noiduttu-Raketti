@@ -1,0 +1,8 @@
+<PixelScenes>
+  <mBufferedPixelScenes>
+    <PixelScene background_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/0_background.png" colors_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/0_visual.plz" material_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/0.plz" pos_x="-10214" pos_y="-22092" skip_biome_checks="1" >
+    </PixelScene>
+    <PixelScene background_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/1_background.png" colors_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/1_visual.plz" material_filename="mods/extol_space_journey/files/pixel_scenes/the_leviathan/1.plz" pos_x="-10185" pos_y="-21580" skip_biome_checks="1" >
+    </PixelScene>
+  </mBufferedPixelScenes>
+</PixelScenes>

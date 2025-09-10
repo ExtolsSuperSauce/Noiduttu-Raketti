@@ -1,5 +1,11 @@
 <PixelScenes>
-	<BackgroundImages/>
+
+	<PixelSceneFiles>
+		<File>mods/extol_space_journey/files/pixel_scenes/the_leviathan.xml</File>
+	</PixelSceneFiles>
+	
+	<BackgroundImages>
+	</BackgroundImages>
 
 	<mBufferedPixelScenes>
 		<PixelScene pos_x="0" pos_y="-10000" just_load_an_entity="mods/extol_space_journey/files/entities/moon/moon.xml" />

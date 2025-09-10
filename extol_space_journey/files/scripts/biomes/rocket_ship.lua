@@ -3,6 +3,7 @@ dofile_once("data/scripts/director_helpers_design.lua")
 dofile_once("data/scripts/biome_scripts.lua")
 
 RegisterSpawnFunction(0xffffeedd, "init")
+RegisterSpawnFunction(0xff4749c2, "spawn_fuel_can")
 
 function init(x, y, w, h)
 	SetRandomSeed(x + w, y + h)
@@ -25,4 +26,8 @@ function init(x, y, w, h)
 			counter = counter + 1
 		end
 	end
+end
+
+function spawn_fuel_can(x, y, w, h)
+	EntityLoad("mods/extol_space_journey/files/entities/pickup/jerrycan.xml", x, y)
 end
