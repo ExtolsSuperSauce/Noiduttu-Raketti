@@ -11,6 +11,7 @@
 	file="mods/extol_space_journey/files/audio/extol_space.bank"
 	event_name="music/division"
 	auto_play="1"
+	m_volume="0.001"
   ></AudioLoopComponent>
 
   <AudioComponent
