@@ -311,6 +311,13 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		GuiOptionsAddForNextWidget(gui, 16)
 		local launch = GuiImageButton(gui, 2, res_x * 0.56, res_y * 0.75, "", "mods/extol_space_journey/files/gui/launch.png")
 		if launch then
+			local pickup_entities = EntityGetWithTag("extol_space_pickup")
+			for _, pickup in ipairs(pickup_entities) do
+				local pickup_sprite_comp = EntityGetFirstComponent(pickup, "SpriteComponent")
+				local pickup_vsc = EntityGetFirstComponent(pickup, "VariableStorageComponent")
+				ComponentSetValue2(pickup_sprite_comp, "alpha", 1)
+				ComponentSetValue2(pickup_vsc, "value_bool", true)
+			end
 			GameRemoveFlagRun("extol_space_selection_gui")
 			if corrupt_access then
 				GameAddFlagRun("extol_corrupt_me")
@@ -337,13 +344,10 @@ elseif right then
 end
 
 -- Rocket stabilization (please verify this is "stabilization")
+-- Extol: Pretty good! Just adding a lerp function to it.
 local brake = ComponentGetValue2(controls, "mButtonDownDown")
 if brake and not left and not right then
-	if rotation > 0 then
-		PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
-	elseif rotation < 0 then
-		PhysicsApplyTorque(player,rot_list[rot_level].amount)
-	end
+	PhysicsApplyTorque(player, lerp( 0, rotation * -1, math.min(math.max(math.abs(rotation)/math.pi - 0.9,0.1),rot_list[rot_level].amount)))
 end
 
 -- Flight
