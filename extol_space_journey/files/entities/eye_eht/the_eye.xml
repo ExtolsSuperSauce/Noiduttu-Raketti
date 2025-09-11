@@ -1,0 +1,18 @@
+<Entity>
+	<SpriteComponent
+		image_file="mods/extol_space_journey/files/entities/eye_eht/eye_eht.png"
+		offset_x="78"
+		offset_y="78"
+		z_index="1"
+	></SpriteComponent>
+	<CollisionTriggerComponent
+		radius="39"
+		destroy_this_entity_when_triggered="0"
+		width="78"
+		height="78"
+	></CollisionTriggerComponent>
+	<LuaComponent
+		script_collision_trigger_hit="mods/extol_space_journey/files/entities/eye_eht/eye_collision.lua"
+		execute_every_n_frame="-1"
+	></LuaComponent>
+</Entity>

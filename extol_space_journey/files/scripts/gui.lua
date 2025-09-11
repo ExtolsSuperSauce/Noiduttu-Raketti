@@ -42,10 +42,10 @@ local fly_list = {
 	{ amount = -75, cost = 0 }
 }
 local rot_list = {
-	{ amount = 6, cost = 150 },
-	{ amount = 8, cost = 350 },
-	{ amount = 10, cost = 800 },
-	{ amount = 12, cost = 0 }
+	{ amount = 5, cost = 150 },
+	{ amount = 7, cost = 350 },
+	{ amount = 9, cost = 800 },
+	{ amount = 10, cost = 0 }
 }
 
 local fuel_list = {
@@ -122,12 +122,12 @@ if not GameHasFlagRun("extol_rocket_return") then
 	planet_index = nil
 	local wallet_comp = EntityGetFirstComponent(player, "WalletComponent")
 	local cash = ComponentGetValue2(wallet_comp, "money")
-	local previous_height = math.floor(ComponentGetValue2(info_component, "value_float"))
+	local previous_height = math.floor(math.abs(ComponentGetValue2(info_component, "value_float")))
 	local best_height = ModSettingGet("extol_space_journey.best_space_height")
 	if best_height == nil then
-		ModSettingSet("extol_space_journey.best_space_height", 0)
-	elseif previous_height < best_height then
-		ModSettingSet("extol_space_journey.best_space_height", math.abs(previous_height))
+		ModSettingSetNextValue("extol_space_journey.best_space_height", 0)
+	elseif previous_height > best_height then
+		ModSettingSetNextValue("extol_space_journey.best_space_height", math.abs(previous_height))
 	end
 	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / 50) + cash)
 	ComponentSetValue2(fuel_component, "value_float", fuel_tank)
@@ -363,7 +363,8 @@ end
 -- lerp using rotation/pi as the weight. Multiplied by 0.05 for larger changes. Increased the values so they affect the ship more, and clamping the value to max rotation speed.
 local brake = ComponentGetValue2(controls, "mButtonDownDown")
 if brake and not left and not right then
-	PhysicsApplyTorque(player, math.min(lerp( 0, rotation * -1, (1 - (math.abs(rotation)/math.pi)) * 0.05) * 5, rot_list[rot_level].amount)) -- Not sure if a constant 5 is enough. lmk if this should be improved.
+	PhysicsApplyTorque(player, math.min(lerp( 0, rotation * -1, (1 - (math.abs(rotation)/math.pi)) * 0.28) * rot_list[rot_level].amount, rot_list[rot_level].amount))
+	-- If we REALLY want to get fancy we will make an if statement to interpret the ship's torque and apply proper counter spin. Tho for now this is pretty solid.
 end
 
 -- Flight
@@ -390,7 +391,7 @@ GuiZSetForNextWidget(gui, 1)
 GuiOptionsAddForNextWidget(gui, 16)
 GuiImage(gui, 2, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fuel_tank.png", 1, 1)
 GuiOptionsAddForNextWidget(gui, 16)
-local color = {1 - scale, scale}
+local color = {math.min((1 - scale) * 1.25,1), math.min(scale*2,1)}
 GuiColorSetForNextWidget(gui, color[1], color[2], 0, 0)
 GuiImage(gui, 3, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fuel_indicator.png", 0.75, scale, 1)
 
@@ -399,6 +400,12 @@ local record_height = ComponentGetValue2(info_component, "value_float")
 if record_height > y then
 	ComponentSetValue2(info_component, "value_float", y)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
+elseif y > 150 then
+	EntitySetComponentsWithTagEnabled(player, "alarm", false)
+	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85, "["..string.upper(random_text(Random(1,6))).."]", "mods/extol_space_journey/files/gui/alert.png")
+	if return_me then
+		GameRemoveFlagRun("extol_rocket_return")
+	end
 elseif record_height < y - 600 then
 	GameRemoveFlagRun("extol_rocket_return")
 elseif record_height < y - 475 or fuel <= 0 then
@@ -422,23 +429,23 @@ end
 
 -- Planet Radar
 local planet_list = {
-	{ name = "moon",    pos_x = 0,     pos_y = -10000 },
-	{ name = "mars",    pos_x = 4200,  pos_y = -15000 },
-	{ name = "juptier", pos_x = -2000, pos_y = -20000 },
-	{ name = "venus",   pos_x = -6000, pos_y = -14000 },
-	{ name = "titan", 	pos_x = 10000, pos_y = -22000 },
-	{ name = "???",     pos_x = 1000,  pos_y = -30000 },
-	{ name = "???",     pos_x = -6666, pos_y = -25000 }
+	{ pos_x = 0,     pos_y = -10000 },
+	{ pos_x = 4200,  pos_y = -15000 },
+	{ pos_x = -2000, pos_y = -20000 },
+	{ pos_x = -6000, pos_y = -14000 },
+	{ pos_x = 10000, pos_y = -22000 },
+	{ pos_x = 1000,  pos_y = -30000 },
+	{ pos_x = -6666, pos_y = -25000 }
 }
 
 local corrupt_list = {
-	{ name = "moon",         pos_x = 3000,   pos_y = -9900 },
-	{ name = "mars",         pos_x = -4200,  pos_y = -16000 },
-	{ name = "the_eye",      pos_x = -17185, pos_y = -6424 },
-	{ name = "venus",        pos_x = 0,      pos_y = -20000 },
-	{ name = "glitch_titan", pos_x = -10000, pos_y = -22000 },
-	{ name = "???",          pos_x = -3500,  pos_y = -35000 },
-	{ name = "???",          pos_x = 7777,   pos_y = -25000 }
+	{ pos_x = 3000,   pos_y = -9900 },
+	{ pos_x = -4200,  pos_y = -16000 },
+	{ pos_x = -17185, pos_y = -6424 },
+	{ pos_x = 0,      pos_y = -20000 },
+	{ pos_x = -10000, pos_y = -22000 },
+	{ pos_x = -3500,  pos_y = -35000 },
+	{ pos_x = 7777,   pos_y = -25000 }
 }
 
 local planet_index = ComponentGetValue2(info_component, "value_int")
