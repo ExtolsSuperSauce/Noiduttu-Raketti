@@ -23,10 +23,3 @@ end
 function OnPlayerDied( player_entity )
 	GameTriggerGameOver()
 end
-
-function OnPlayerSpawned(pid)
-	if HasFlagPersistent("extol_space_winner") then
-		local pisc = EntityGetFirstComponent("pid", "PhysicsImageShapeComponent")
-		ComponentSetValue2(pisc, "image_file", "mods/extol_space_journey/files/rocket/rocket_crown.png")
-	end
-end
