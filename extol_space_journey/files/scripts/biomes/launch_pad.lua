@@ -7,6 +7,7 @@ RegisterSpawnFunction(0xffdedede, "particle_emitters")
 
 function init(x, y, w, h)
 	LoadPixelScene("mods/extol_space_journey/files/pixel_scenes/launch_pad_mats.png", "mods/extol_space_journey/files/pixel_scenes/launch_pad_visual.png", x, y, "", true)
+	LoadBackgroundSprite("mods/extol_space_journey/files/pixel_scenes/rocket_controls_visual.png", x + 250, y + 7)
 end
 
 function particle_emitters(x, y, w, h)

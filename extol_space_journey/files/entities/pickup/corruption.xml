@@ -1,4 +1,4 @@
-<Entity>
+<Entity tags="extol_space_pickup">
 	<SpriteComponent
 		image_file="mods/extol_space_journey/files/entities/pickup/corruption_sprite.xml"
 		offset_x="5"
