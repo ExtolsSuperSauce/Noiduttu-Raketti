@@ -106,9 +106,6 @@ if not GameHasFlagRun("extol_rocket_return") then
 	if GameHasFlagRun("extol_paradox_time") then
 		EntityKill(player)
 		return
-	elseif HasFlagPersistent("extol_space_winner") then
-		local pisc = EntityGetFirstComponent(player, "PhysicsImageShapeComponent")
-		ComponentSetValue2(pisc, "image_file", "mods/extol_space_journey/files/rocket/rocket_crown.png")
 	end
 	PhysicsBody2InitFromComponents(player)
 	local new_x, new_y = GamePosToPhysicsPos(250, 50)
@@ -125,9 +122,9 @@ if not GameHasFlagRun("extol_rocket_return") then
 	local previous_height = math.floor(math.abs(ComponentGetValue2(info_component, "value_float")))
 	local best_height = ModSettingGet("extol_space_journey.best_space_height")
 	if best_height == nil then
-		ModSettingSetNextValue("extol_space_journey.best_space_height", 0)
+		ModSettingSet("extol_space_journey.best_space_height", 0)
 	elseif previous_height > best_height then
-		ModSettingSetNextValue("extol_space_journey.best_space_height", math.abs(previous_height))
+		ModSettingSet("extol_space_journey.best_space_height",previous_height)
 	end
 	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / 50) + cash)
 	ComponentSetValue2(fuel_component, "value_float", fuel_tank)
