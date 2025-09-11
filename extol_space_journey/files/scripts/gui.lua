@@ -235,7 +235,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "insanity",	  related_tag = "?????extol?????", 			  required_tag = "extol_the_mirror" },
 		{ name = "NATURE",        related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
-	
+
 	GuiOptionsAddForNextWidget(gui,16)
 	GuiText(gui, res_x*0.28, res_y*0.2, "DESTINATIONS")
 	local corrupt_access = ComponentGetValue2(info_component,"value_bool")
@@ -329,7 +329,6 @@ local controls = EntityGetFirstComponent(player, "ControlsComponent")
 local left = ComponentGetValue2(controls, "mButtonDownLeft")
 local right = ComponentGetValue2(controls, "mButtonDownRight")
 local rot_level = ComponentGetValue2(upgrade_component, "value_string")
-local rocket_flame_comp = EntityGetFirstComponent(player, "ParticleEmitterComponent", "rocket_flame")
 rot_level = tonumber(rot_level)
 if left then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
@@ -337,20 +336,26 @@ elseif right then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount)
 end
 
---[[local brake = ComponentGetValue2(controls, "mButtonDownDown")
---if brake then
-	--TODO
-end]]
+-- Rocket stabilization (please verify this is "stabilization")
+local brake = ComponentGetValue2(controls, "mButtonDownDown")
+if brake and not left and not right then
+	if rotation > 0 then
+		PhysicsApplyTorque(player, rot_list[rot_level].amount * -1)
+	elseif rotation < 0 then
+		PhysicsApplyTorque(player,rot_list[rot_level].amount)
+	end
+end
 
+-- Flight
 local flying = ComponentGetValue2(controls, "mButtonDownFly")
 local fly_level = ComponentGetValue2(upgrade_component,"value_int")
 if flying and fuel > 0 then
 	local fly_force_x, fly_force_y = vec_rotate(0, fly_list[fly_level].amount, rotation)
 	PhysicsApplyForce(player, fly_force_x, fly_force_y)
 	ComponentSetValue2(fuel_component, "value_float", fuel - 0.075)
-	EntitySetComponentsWithTagEnabled(player,"rocket_flame",true)
+	EntitySetComponentsWithTagEnabled(player, "rocket_flame", true)
 else
-	EntitySetComponentsWithTagEnabled(player,"rocket_flame",false)
+	EntitySetComponentsWithTagEnabled(player, "rocket_flame", false)
 end
 
 -- Prevent player from opening the inventory
@@ -358,7 +363,6 @@ local igc = EntityGetFirstComponent(player, "InventoryGuiComponent")
 if igc and ComponentGetValue2(igc, "mActive") then
 	ComponentSetValue2(igc, "mActive", false)
 end
-
 
 -- Fuel Indicator
 local scale = fuel/fuel_tank
