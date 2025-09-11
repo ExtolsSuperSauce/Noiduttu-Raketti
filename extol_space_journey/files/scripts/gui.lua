@@ -106,6 +106,9 @@ if not GameHasFlagRun("extol_rocket_return") then
 	if GameHasFlagRun("extol_paradox_time") then
 		EntityKill(player)
 		return
+	elseif HasFlagPersistent("extol_space_winner") then
+		local pisc = EntityGetFirstComponent(player, "PhysicsImageShapeComponent")
+		ComponentSetValue2(pisc, "image_file", "mods/extol_space_journey/files/rocket/rocket_crown.png")
 	end
 	PhysicsBody2InitFromComponents(player)
 	local new_x, new_y = GamePosToPhysicsPos(250, 50)
@@ -119,7 +122,13 @@ if not GameHasFlagRun("extol_rocket_return") then
 	planet_index = nil
 	local wallet_comp = EntityGetFirstComponent(player, "WalletComponent")
 	local cash = ComponentGetValue2(wallet_comp, "money")
-	local previous_height = ComponentGetValue2(info_component, "value_float")
+	local previous_height = math.floor(ComponentGetValue2(info_component, "value_float"))
+	local best_height = ModSettingGet("extol_space_journey.best_space_height")
+	if best_height == nil then
+		ModSettingSet("extol_space_journey.best_space_height", 0)
+	elseif previous_height < best_height then
+		ModSettingSet("extol_space_journey.best_space_height", math.abs(previous_height))
+	end
 	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / 50) + cash)
 	ComponentSetValue2(fuel_component, "value_float", fuel_tank)
 	ComponentSetValue2(info_component, "value_float", 0)
@@ -300,7 +309,11 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	if question_mark and GameHasFlagRun("i_extol_your_curiosity") then
 		ComponentSetValue2(info_component, "value_bool", not corrupt_access)
 	end
-
+	
+	local best_text = "BEST: " .. ModSettingGet("extol_space_journey.best_space_height")
+	GuiOptionsAddForNextWidget(gui, 16)
+	GuiText(gui, res_x*0.28, res_y*0.75, best_text)
+	
 	-- LAUNCH!
 	if planet_selection == 0 then
 		GuiOptionsAddForNextWidget(gui, 16)
@@ -345,9 +358,12 @@ end
 
 -- Rocket stabilization (please verify this is "stabilization")
 -- Extol: Pretty good! Just adding a lerp function to it.
+-- Addendum: Hrm... previous one was a bit too slow. Mutliplied the output instead of further reducing the weight.
+-- Explanation: 0 is the target rotation. Rotation is inverted otherwise it will add rotation instead of removing it thus flipping upside down instead.
+-- lerp using rotation/pi as the weight. Multiplied by 0.05 for larger changes. Increased the values so they affect the ship more, and clamping the value to max rotation speed.
 local brake = ComponentGetValue2(controls, "mButtonDownDown")
 if brake and not left and not right then
-	PhysicsApplyTorque(player, lerp( 0, rotation * -1, math.min(math.max(math.abs(rotation)/math.pi - 0.9,0.1),rot_list[rot_level].amount)))
+	PhysicsApplyTorque(player, math.min(lerp( 0, rotation * -1, (1 - (math.abs(rotation)/math.pi)) * 0.05) * 5, rot_list[rot_level].amount)) -- Not sure if a constant 5 is enough. lmk if this should be improved.
 end
 
 -- Flight
