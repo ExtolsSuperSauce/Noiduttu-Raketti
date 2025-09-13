@@ -358,12 +358,27 @@ elseif right then
 	PhysicsApplyTorque(player, rot_list[rot_level].amount)
 end
 
--- Rocket stabilization (please verify this is "stabilization")
--- Extol: Pretty good! Just adding a lerp function to it.
--- Addendum: Hrm... previous one was a bit too slow. Mutliplied the output instead of further reducing the weight.
+-- Rocket stabilization
+
+-- STABILIZATION TOGGLE!
+local brake = GetValueBool("extol_space_stablization_toggle", true)
+local nav_img = "mods/extol_space_journey/files/gui/nav_sym_1.png"
+local nav_text = "Auto S: OFF"
+if brake then
+	nav_img = "mods/extol_space_journey/files/gui/nav_sym_0.png"
+	nav_text = "Auto S: ON"
+end
+local nav_sym_toggle = GuiImageButton(gui, 69420, res_x * 0.76, res_y * 0.87, nav_text, nav_img)
+if nav_sym_toggle then
+	SetValueBool("extol_space_stablization_toggle", not brake)
+end
+
 -- Explanation: 0 is the target rotation. Rotation is inverted otherwise it will add rotation instead of removing it thus flipping upside down instead.
 -- lerp using rotation/pi as the weight. Multiplied by 0.05 for larger changes. Increased the values so they affect the ship more, and clamping the value to max rotation speed.
-local brake = ComponentGetValue2(controls, "mButtonDownDown")
+if not brake then
+	brake = ComponentGetValue2(controls, "mButtonDownDown")
+end
+
 if brake and not left and not right then
 	PhysicsApplyTorque(player, math.min(lerp( 0, rotation * -1, (1 - (math.abs(rotation)/math.pi)) * 0.28) * rot_list[rot_level].amount, rot_list[rot_level].amount))
 	-- If we REALLY want to get fancy we will make an if statement to interpret the ship's torque and apply proper counter spin. Tho for now this is pretty solid.
