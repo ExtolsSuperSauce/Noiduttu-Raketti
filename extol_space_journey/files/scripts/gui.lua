@@ -41,11 +41,16 @@ local fly_list = {
 	{ amount = -63, cost = 1200 },
 	{ amount = -75, cost = 0 }
 }
+-- 4 feels slow and 10 felt barely controllable.
+-- might make a sell better later but for now this is ok...
 local rot_list = {
-	{ amount = 5, cost = 150 },
-	{ amount = 7, cost = 350 },
-	{ amount = 9, cost = 800 },
-	{ amount = 10, cost = 0 }
+	{ amount = 4, cost = 100 },
+	{ amount = 5, cost = 250 },
+	{ amount = 6, cost = 400 },
+	{ amount = 7, cost = 550 },
+	{ amount = 8, cost = 700 },
+	{ amount = 9, cost = Random(1000,9999) }, -- Corrupt Ultraspin 
+	{ amount = 100, cost = 0 }
 }
 
 local fuel_list = {
