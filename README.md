@@ -3,6 +3,12 @@
 ## Theme Space and Corruption.
 Made by Extol and Absent Friend
 
--- TODO:
+How to install:
 
-General Polish/Gameplay Enhancements. (S to Stabalize, Moon Complete GUI, Better Ingredients, Better Pizza, Papa Johns.)
+Go to Code and download the .zip file.
+
+Extract it and move `extol_space_journey` into your `Noita/mods` folder.
+
+Complete file structure should look like `Noita/mods/extol_space_journey/mod.xml`
+
+Enjoy the mod!

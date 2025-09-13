@@ -8,8 +8,8 @@
 	<CollisionTriggerComponent
 		radius="15"
 		destroy_this_entity_when_triggered="0"
-		width="18"
-		height="18"
+		width="20"
+		height="20"
 	></CollisionTriggerComponent>
 	<LuaComponent
 		script_source_file="mods/extol_space_journey/files/entities/pickup/pickup_refresh.lua"
