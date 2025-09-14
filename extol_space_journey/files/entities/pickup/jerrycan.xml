@@ -3,7 +3,7 @@
 		image_file="mods/extol_space_journey/files/entities/pickup/jerrycan.png"
 		offset_x="5"
 		offset_y="5"
-		z_index="1"
+		z_index="0.5"
 	></SpriteComponent>
 	<CollisionTriggerComponent
 		radius="15"
