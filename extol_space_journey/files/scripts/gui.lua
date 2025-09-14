@@ -243,7 +243,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 		{ name = "The Eye",       related_tag = "extol_the_eye",			  required_tag = "extol_glitch_moon" },
 		{ name = "The Mirror",    related_tag = "extol_the_mirror",			  required_tag = "extol_glitch_mars" },
 		{ name = "The Leviathan", related_tag = "extol_the_leviathan",		  required_tag = "extol_the_eye" },
-		{ name = "insanity",	  related_tag = "?????extol?????", 			  required_tag = "extol_the_mirror" },
+		{ name = "INSANIA",	  related_tag = "?????extol?????", 			  required_tag = "extol_the_mirror" },
 		{ name = "NATURE",        related_tag = "extol_when_the_extol_extol", required_tag = "extol_milliways_found" }
 	}
 
@@ -265,7 +265,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 				if planet_selection == i then
 					GuiColorSetForNextWidget(gui,1,1,0,1)
 				end
-				if destination.name == "insanity" then
+				if destination.name == "INSANIA" then
 					if GetValueInteger("extol_corruption_delay_"..i,0) <= GameGetFrameNum() then
 						destination.name = random_text(7)
 						ComponentSetValue2(info_component, "value_string", random_text(7))
@@ -308,7 +308,7 @@ if GameHasFlagRun("extol_space_selection_gui") then
 	end
 	GuiOptionsAddForNextWidget(gui, 16)
 	local question_mark = GuiImageButton(gui, 60, res_x * 0.28, res_y * 0.67, "", sprite_file)
-	if question_mark and GameHasFlagRun("i_extol_your_curiosity") then
+	if question_mark and GameHasFlagRun("i_extol_your_curiosity") or Random(1,1000) == 1000 and GameHasFlagRun("i_extol_your_curiosity") then
 		ComponentSetValue2(info_component, "value_bool", not corrupt_access)
 	end
 	
