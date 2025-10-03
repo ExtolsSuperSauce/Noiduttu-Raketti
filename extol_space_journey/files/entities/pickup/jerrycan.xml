@@ -6,15 +6,19 @@
 		z_index="0.5"
 	></SpriteComponent>
 	<CollisionTriggerComponent
-		radius="15"
+		radius="22"
 		destroy_this_entity_when_triggered="0"
-		width="20"
-		height="20"
+		width="22"
+		height="22"
 	></CollisionTriggerComponent>
 	<LuaComponent
 		script_source_file="mods/extol_space_journey/files/entities/pickup/pickup_refresh.lua"
 		script_collision_trigger_hit="mods/extol_space_journey/files/entities/pickup/jerrycan.lua"
 		execute_every_n_frame="60"
+	></LuaComponent>
+	<LuaComponent
+		script_source_file="mods/extol_space_journey/files/entities/pickup/pickup_init.lua"
+		remove_after_executed="1"
 	></LuaComponent>
 	<LightComponent
 		r="255"

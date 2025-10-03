@@ -29,5 +29,12 @@ function OnPlayerSpawned( player_entity )
 		local pisc = EntityGetFirstComponent(player_entity, "PhysicsImageShapeComponent")
 		ComponentSetValue2(pisc, "image_file", "mods/extol_space_journey/files/rocket/rocket_crown.png")
 		GameAddFlagRun("extol_space_winner_init")
+		local difficulty = ModSettingGet("extol_space_journey.extol_space_difficulty")
+		if difficulty == nil then
+			ModSettingSet("extol_space_journey.extol_space_difficulty","normal")
+			GamePrint("Difficulty: normal")
+		else
+			GamePrint("Difficulty: " .. difficulty )
+		end
 	end
 end

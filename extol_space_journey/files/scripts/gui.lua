@@ -1,4 +1,14 @@
 -- HELPER FUNCTIONS
+
+local function DynamicIndicator(guix,guiy, _gui_id, slider_amount, amount_min, amount_max, background_image, indicator_image)
+	local slider_size_x, slider_size_y = GuiGetImageDimensions(gui,background_image,1)
+	local silder_size_half = slider_size_x * 0.5
+	local amount_ratio = amount_max - amount_min
+	local slider_pos = math.max(math.min((slider_amount - amount_min)/amount_ratio * slider_size_x - silder_size_half, slider_size_x-silder_size_half), silder_size_half-slider_size_x)
+	GuiOptionsAddForNextWidget(gui,16)
+	GuiImage(gui, _gui_id, guix + slider_pos, guiy, indicator_image, 1, 1)
+end
+
 local function lerp(a, b, weight)
 	return a * weight + b * (1 - weight)
 end
@@ -61,7 +71,7 @@ local fuel_list = {
 }
 
 local player = GetUpdatedEntityID()
-local x, y, rotation = EntityGetTransform(player)
+local playerx, playery, rotation = EntityGetTransform(player)
 local storage_comps = EntityGetComponent(player, "VariableStorageComponent")
 local fuel_component = 0
 local upgrade_component = 0
@@ -80,7 +90,7 @@ end
 local world_state = GameGetWorldStateEntity()
 local world_comp = EntityGetFirstComponent(world_state, "WorldStateComponent")
 local current_time = ComponentGetValue2(world_comp, "time")
-if y < -5000 then
+if playery < -5000 then
 	local time_interp = lerp(current_time, 0.56, 0.999)
 	ComponentSetValue2(world_comp, "time", time_interp)
 else
@@ -88,7 +98,7 @@ else
 	ComponentSetValue2(world_comp, "time", time_interp)
 end
 local cloud_target = ComponentGetValue2(world_comp, "rain")
-if y < -3000 then
+if playery < -3000 then
 	local cloud_interp = lerp(cloud_target, 0, 0.995)
 	ComponentSetValue2(world_comp, "rain", cloud_interp)
 else
@@ -100,7 +110,7 @@ local setting_music_volume = ModSettingGet("extol_space_journey.extol_music_volu
 if setting_music_volume == nil then
 	setting_music_volume = 1
 end
-local dynamic_volume = math.max(math.min(y/-7000,1)*setting_music_volume,0.01)
+local dynamic_volume = math.max(math.min(playery/-7000,1)*setting_music_volume,0.01)
 local music_comp = EntityGetFirstComponent(player, "AudioLoopComponent", "extol_music_player")
 ComponentSetValue2(music_comp,"m_volume",dynamic_volume)
 
@@ -122,8 +132,6 @@ if not GameHasFlagRun("extol_rocket_return") then
 	GameRemoveFlagRun("extol_petri_poke")
 	GameRemoveFlagRun("extol_rocket_success")
 	planet_index = nil
-	local wallet_comp = EntityGetFirstComponent(player, "WalletComponent")
-	local cash = ComponentGetValue2(wallet_comp, "money")
 	local previous_height = math.floor(math.abs(ComponentGetValue2(info_component, "value_float")))
 	local best_height = ModSettingGet("extol_space_journey.best_space_height")
 	if best_height == nil then
@@ -131,7 +139,16 @@ if not GameHasFlagRun("extol_rocket_return") then
 	elseif previous_height > best_height then
 		ModSettingSet("extol_space_journey.best_space_height",previous_height)
 	end
-	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / 50) + cash)
+	local wallet_comp = EntityGetFirstComponent(player, "WalletComponent")
+	local cash = ComponentGetValue2(wallet_comp, "money")
+	local difficulty = ModSettingGet("extol_space_journey.extol_space_difficulty")
+	local inflation = 50
+	if difficulty == "easy" then
+		inflation = 40
+	elseif difficulty == "hard" then
+		inflation = 60
+	end
+	ComponentSetValue2(wallet_comp, "money", math.floor(math.abs(previous_height) / inflation) + cash)
 	ComponentSetValue2(fuel_component, "value_float", fuel_tank)
 	ComponentSetValue2(info_component, "value_float", 0)
 	ComponentSetValue2(info_component, "value_int", 0)
@@ -360,7 +377,6 @@ end
 
 -- Rocket stabilization
 
--- STABILIZATION TOGGLE!
 local brake = GetValueBool("extol_space_stablization_toggle", true)
 local nav_img = "mods/extol_space_journey/files/gui/nav_sym_1.png"
 local nav_text = "Auto S: OFF"
@@ -381,7 +397,7 @@ end
 
 if brake and not left and not right then
 	PhysicsApplyTorque(player, math.min(lerp( 0, rotation * -1, (1 - (math.abs(rotation)/math.pi)) * 0.28) * rot_list[rot_level].amount, rot_list[rot_level].amount))
-	-- If we REALLY want to get fancy we will make an if statement to interpret the ship's torque and apply proper counter spin. Tho for now this is pretty solid.
+	-- TODO: interpret the ship's torque and apply proper counter spin
 end
 
 -- Flight
@@ -414,24 +430,24 @@ GuiImage(gui, 3, res_x * 0.5, res_y - 20, "mods/extol_space_journey/files/gui/fu
 
 -- ALERT
 local record_height = ComponentGetValue2(info_component, "value_float")
-if record_height > y then
-	ComponentSetValue2(info_component, "value_float", y)
+if record_height > playery then
+	ComponentSetValue2(info_component, "value_float", playery)
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
-elseif y > 150 then
+elseif playery > 150 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
 	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85, "["..string.upper(random_text(Random(1,6))).."]", "mods/extol_space_journey/files/gui/alert.png")
 	if return_me then
 		GameRemoveFlagRun("extol_rocket_return")
 	end
-elseif record_height < y - 600 then
+elseif record_height < playery - 600 then
 	GameRemoveFlagRun("extol_rocket_return")
-elseif record_height < y - 475 or fuel <= 0 then
+elseif record_height < playery - 475 or fuel <= 0 then
 	EntitySetComponentsWithTagEnabled(player, "alarm", true)
 	local return_me = GuiImageButton(gui, 2025, res_x * 0.24, res_y * 0.85, "[RETURN]", "mods/extol_space_journey/files/gui/alert.png")
 	if return_me then
 		GameRemoveFlagRun("extol_rocket_return")
 	end
-elseif y > 100 then
+elseif playery > 100 then
 	GameRemoveFlagRun("extol_rocket_return")
 else
 	EntitySetComponentsWithTagEnabled(player, "alarm", false)
@@ -469,22 +485,38 @@ local planet_index = ComponentGetValue2(info_component, "value_int")
 if not GameHasFlagRun("extol_corrupt_me") then
 	if planet_index ~= 0 then
 		local indicator_distance = 32
-		local dir_x = planet_list[planet_index].pos_x - x
-		local dir_y = planet_list[planet_index].pos_y - y
+		local dir_x = planet_list[planet_index].pos_x - playerx
+		local dir_y = planet_list[planet_index].pos_y - playery
 		dir_x, dir_y = vec_normalize(dir_x, dir_y)
-		local indicator_x = x + dir_x * indicator_distance
-		local indicator_y = y + dir_y * indicator_distance
+		local indicator_x = playerx + dir_x * indicator_distance
+		local indicator_y = playery + dir_y * indicator_distance
 		GameCreateSpriteForXFrames( "data/particles/radar_moon.png", indicator_x, indicator_y )
 	end
 else
 	if planet_index ~= 0 then
 		local indicator_distance = Random(31,33)
-		local dir_x = corrupt_list[planet_index].pos_x - x + Random(-20,20)
-		local dir_y = corrupt_list[planet_index].pos_y - y + Random(-20,20)
+		local dir_x = corrupt_list[planet_index].pos_x - playerx + Random(-20,20)
+		local dir_y = corrupt_list[planet_index].pos_y - playery + Random(-20,20)
 		dir_x, dir_y = vec_normalize(dir_x, dir_y)
-		local indicator_x = x + dir_x * indicator_distance
-		local indicator_y = y + dir_y * indicator_distance
+		local indicator_x = playerx + dir_x * indicator_distance
+		local indicator_y = playery + dir_y * indicator_distance
 		GameCreateSpriteForXFrames( "mods/extol_space_journey/files/gui/glitch_radar/glitch_radar_moon" .. Random(0, 5) .. ".png", indicator_x, indicator_y )
+	end
+end
+
+-- DynamicIndicator(x,y, _gui_id, slider_amount, amount_min, amount_max, background_image, indicator_image)
+
+GuiOptionsAddForNextWidget(gui,16)
+GuiImage(gui, 69420, res_x * 0.5, res_y * 0.87, "mods/extol_space_journey/files/gui/height_indicator.png", 1, 1)
+DynamicIndicator(res_x * 0.5, res_y * 0.87, 69421, playery, record_height + 600, record_height, "mods/extol_space_journey/files/gui/height_indicator.png", "mods/extol_space_journey/files/gui/rocket_man.png" )
+
+if not GameHasFlagRun("extol_corrupt_me") then
+	if planet_index ~= 0 then
+		DynamicIndicator(res_x * 0.5, res_y * 0.87, 69421, planet_list[planet_index].pos_y, record_height + 600, record_height, "mods/extol_space_journey/files/gui/height_indicator.png", "data/particles/radar_moon.png" )
+	end
+else
+	if planet_index ~= 0 then
+		DynamicIndicator(res_x * 0.5, res_y * 0.87, 69422, corrupt_list[planet_index].pos_y, record_height + 600, record_height, "mods/extol_space_journey/files/gui/height_indicator.png", "mods/extol_space_journey/files/gui/glitch_radar/glitch_radar_moon" .. Random(0, 5) .. ".png" )
 	end
 end
 
