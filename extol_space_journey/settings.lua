@@ -34,6 +34,14 @@ mod_settings =
 				value_max = 1,
 				scope = MOD_SETTING_SCOPE_RUNTIME,
 			},
+			{
+				id = "extol_space_difficulty",
+				ui_name = "Difficulty",
+				value_display_multiplier = 100,
+				value_default = "normal",
+				values = {{"easy","Easy"}, {"normal","Normal"}, {"hard","Hard"}},
+				scope = MOD_SETTING_SCOPE_NEW_GAME,
+			},
 		}
 	}
 }
