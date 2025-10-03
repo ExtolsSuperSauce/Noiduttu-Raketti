@@ -58,7 +58,7 @@
   	angular_damping="1"
   	linear_damping="1"
     kill_entity_after_initialized="0"
-	kill_entity_if_body_destroyed="0"
+	kill_entity_if_body_destroyed="1"
 	manual_init="1"
 	>
   </PhysicsBody2Component>
