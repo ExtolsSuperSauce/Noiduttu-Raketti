@@ -7,6 +7,6 @@ function collision_trigger(collider)
 		EntityKill(collider)
 		local eid = GetUpdatedEntityID()
 		local x,y = EntityGetTransform(eid)
-		EntityLoad("data/entities/items/pickup/sun/new_sun.xml",x,y)
+		EntityLoad("data/entities/items/pickup/sun/newsun.xml",x,y)
 	end
 end
